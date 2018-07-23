@@ -24,6 +24,9 @@ namespace Clad
             }
         }
 
+        [Outlet]
+        PadButton[] _padButtons { get; set; }
+
         IList<IDisposable> _observablesToDispose = new List<IDisposable>();
 
         protected ViewController(IntPtr handle) : base(handle)
@@ -57,6 +60,7 @@ namespace Clad
                 attributedString.AddAttribute(UIStringAttributeKey.Font, UIFont.SystemFontOfSize(22, UIFontWeight.Regular), new NSRange(newValue.ToString().Length, 3));
                 attributedString.EndEditing();
                 bpmLabel.AttributedText = attributedString;
+                bpmStepperControl.Value = newValue;
             }));
         }
         public override void ViewDidUnload()
@@ -79,6 +83,8 @@ namespace Clad
             // Release any cached data, images, etc that aren't in use
         }
 
+        public override bool PrefersStatusBarHidden() => true;
+
         #region Events
         void BpmTapButton_TouchDown(object sender, EventArgs e)
         {
@@ -92,6 +98,25 @@ namespace Clad
             UIStepper stepper = (UIStepper)sender;
             Debug.WriteLine($"BPM Stepper Change: {stepper.Value}");
             BPM.CurrentBPM = (int)stepper.Value;
+        }
+
+        partial void PadButton_Up(PadButton sender)
+        {
+            var key = sender.AccessibilityIdentifier;
+            Debug.WriteLine($"Pad button tapped: {key}");
+
+            if(sender.Selected)
+            {
+                sender.Reset();
+                return;
+            }
+
+            //Reset
+            foreach (var padButton in _padButtons)
+                padButton.Reset();
+
+            //Highlight
+            sender.Play();
         }
 
         void BpmTapButton_TouchUpInside(object sender, EventArgs e)

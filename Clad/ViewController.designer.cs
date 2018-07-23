@@ -25,6 +25,10 @@ namespace Clad
         [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UIButton bpmTapButton { get; set; }
 
+
+        [Action ("PadButton_Up:")]
+        partial void PadButton_Up (Clad.PadButton sender);
+
         void ReleaseDesignerOutlets ()
         {
             if (bpmLabel != null) {

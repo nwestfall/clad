@@ -91,6 +91,7 @@
   <ItemGroup>
     <Folder Include="Resources\" />
     <Folder Include="Models\" />
+    <Folder Include="Resources\Sounds\" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="LaunchScreen.storyboard" />
@@ -110,6 +111,11 @@
     </Compile>
     <Compile Include="Models\BPMModel.cs" />
     <Compile Include="NSObjectConverter.cs" />
+    <Compile Include="AudioManager.cs" />
+    <Compile Include="PadButton.cs" />
+    <Compile Include="PadButton.designer.cs">
+      <DependentUpon>PadButton.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>
