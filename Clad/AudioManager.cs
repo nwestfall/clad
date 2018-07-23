@@ -126,6 +126,27 @@ namespace Clad
             }
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            if(disposing)
+            {
+                foreach(var item in _activePlayers)
+                {
+                    item.Value.Stop();
+                    item.Value.Dispose();
+                }
+                _activePlayers.Clear();
+                _activePlayers = null;
+
+                foreach(var item in _audioPlayers)
+                    item.Value.Dispose();
+                _audioPlayers.Clear();
+                _audioPlayers = null;
+            }
+
+            base.Dispose(disposing);
+        }
+
         private static NSUrl GetSoundFile(PadSounds padSounds, string key)
         {
             //TODO

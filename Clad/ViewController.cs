@@ -29,6 +29,23 @@ namespace Clad
 
         IList<IDisposable> _observablesToDispose = new List<IDisposable>();
 
+        UIGestureRecognizer _bpmLabelGesture = new UIGestureRecognizer(() =>
+        {
+            var alertController = UIAlertController.Create("Enter BPM", "", UIAlertControllerStyle.Alert);
+            alertController.AddTextField(textField =>
+            {
+                textField.KeyboardType = UIKeyboardType.NumberPad;
+            });
+
+            var cancelAction = UIAlertAction.Create("Cancel", UIAlertActionStyle.Cancel, alertAction => Debug.WriteLine("BPM Label Input Cancelled"));
+            var okayAction = UIAlertAction.Create("Set", UIAlertActionStyle.Default, alertAction => Debug.WriteLine("BPM Set"));
+
+            alertController.AddAction(cancelAction);
+            alertController.AddAction(okayAction);
+
+            UIApplication.SharedApplication.KeyWindow.RootViewController.PresentViewController(alertController, true, () => Debug.WriteLine("Completed showing alert"));
+        });
+
         protected ViewController(IntPtr handle) : base(handle)
         {
             // Note: this .ctor should not contain any initialization logic.
@@ -52,6 +69,8 @@ namespace Clad
             bpmStepperControl.ValueChanged += BpmStepperControl_ValueChanged;
             bpmTapButton.TouchDown += BpmTapButton_TouchDown;
             bpmTapButton.TouchUpInside += BpmTapButton_TouchUpInside;
+            bpmLabel.UserInteractionEnabled = true;
+            bpmLabel.AddGestureRecognizer(_bpmLabelGesture);
 
             //Observers
             _observablesToDispose.Add(BPM.AddObserver(nameof(BPMModel.CurrentBPM), NSKeyValueObservingOptions.New, (observed) =>
@@ -73,6 +92,7 @@ namespace Clad
             bpmStepperControl.ValueChanged -= BpmStepperControl_ValueChanged;
             bpmTapButton.TouchDown -= BpmTapButton_TouchDown;
             bpmTapButton.TouchUpInside -= BpmTapButton_TouchUpInside;
+            bpmLabel.RemoveGestureRecognizer(_bpmLabelGesture);
             //Observers
             foreach (var observable in _observablesToDispose)
                 observable?.Dispose();

@@ -28,14 +28,13 @@
                                     <navigationItem title="Clad" id="1071"/>
                                 </items>
                             </navigationBar>
-                            <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="500" translatesAutoresizingMaskIntoConstraints="NO" id="1100">
-                                <rect key="frame" x="46" y="153" width="94" height="29"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="500" translatesAutoresizingMaskIntoConstraints="NO" id="1100" fixedFrame="YES">
+                                <rect key="frame" x="46" y="141" width="94" height="29"/>
                                 <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
-                            </stepper>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1101">
-                                <rect key="frame" x="33" y="45" width="120" height="100"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </stepper>
+                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1101" fixedFrame="YES">
+                                <rect key="frame" x="33" y="45" width="120" height="100"/>
                                 <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
                                 <attributedString key="attributedText">
                                     <fragment content="125">
@@ -53,168 +52,24 @@
                                         </attributes>
                                     </fragment>
                                 </attributedString>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </label>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1102">
-                                <rect key="frame" x="0.0" y="205" width="423" height="562"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <rect key="frame" x="0.0" y="194" width="420" height="574"/>
+                                <autoresizingMask key="autoresizingMask" heightSizable="YES" widthSizable="YES" flexibleMaxX="YES"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="1106">
-                                        <rect key="frame" x="0.0" y="0.0" width="423" height="561"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="420" height="574"/>
+                                        <autoresizingMask key="autoresizingMask" heightSizable="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </stackView>
                                 </subviews>
                             </scrollView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1499" customClass="PadButton">
-                                <rect key="frame" x="424" y="45" width="150" height="150"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.38039215686274508" green="0.48627450980392156" blue="0.54117647058823526" alpha="1" colorSpace="calibratedRGB"/>
-                                <accessibility key="accessibilityConfiguration" hint="C" identifier="C" label="C"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
-                                <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
-                                <state key="normal" title="C"/>
-                                <connections>
-                                    <action selector="PadButton_Up:" destination="277" eventType="touchUpInside" id="9493"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1504" customClass="PadButton">
-                                <rect key="frame" x="574" y="45" width="150" height="150"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.27058823529411763" green="0.35294117647058826" blue="0.3843137254901961" alpha="1" colorSpace="calibratedRGB"/>
-                                <accessibility key="accessibilityConfiguration" hint="C#" identifier="C#" label="C#"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
-                                <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
-                                <state key="normal" title="C#"/>
-                                <connections>
-                                    <action selector="PadButton_Up:" destination="277" eventType="touchUpInside" id="9696"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1505" customClass="PadButton">
-                                <rect key="frame" x="724" y="45" width="150" height="150"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.38039215686274508" green="0.48627450980392156" blue="0.54117647058823526" alpha="1" colorSpace="calibratedRGB"/>
-                                <accessibility key="accessibilityConfiguration" hint="D" identifier="D" label="D"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
-                                <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
-                                <state key="normal" title="D"/>
-                                <connections>
-                                    <action selector="PadButton_Up:" destination="277" eventType="touchUpInside" id="9700"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1506" customClass="PadButton">
-                                <rect key="frame" x="874" y="45" width="150" height="150"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.27058823529411763" green="0.35294117647058826" blue="0.3843137254901961" alpha="1" colorSpace="calibratedRGB"/>
-                                <accessibility key="accessibilityConfiguration" hint="D#" identifier="D#" label="D#"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
-                                <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
-                                <state key="normal" title="D#"/>
-                                <connections>
-                                    <action selector="PadButton_Up:" destination="277" eventType="touchUpInside" id="9701"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1507" customClass="PadButton">
-                                <rect key="frame" x="424" y="194" width="150" height="150"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.27058823529411763" green="0.35294117647058826" blue="0.3843137254901961" alpha="1" colorSpace="calibratedRGB"/>
-                                <accessibility key="accessibilityConfiguration" hint="E" identifier="E" label="E"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
-                                <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
-                                <state key="normal" title="E"/>
-                                <connections>
-                                    <action selector="PadButton_Up:" destination="277" eventType="touchUpInside" id="9702"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1508" customClass="PadButton">
-                                <rect key="frame" x="574" y="194" width="150" height="150"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.38039215686274508" green="0.48627450980392156" blue="0.54117647058823526" alpha="1" colorSpace="calibratedRGB"/>
-                                <accessibility key="accessibilityConfiguration" hint="F" identifier="F" label="F"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
-                                <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
-                                <state key="normal" title="F"/>
-                                <connections>
-                                    <action selector="PadButton_Up:" destination="277" eventType="touchUpInside" id="9703"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1509" customClass="PadButton">
-                                <rect key="frame" x="724" y="194" width="150" height="150"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.27058823529411763" green="0.35294117647058826" blue="0.3843137254901961" alpha="1" colorSpace="calibratedRGB"/>
-                                <accessibility key="accessibilityConfiguration" hint="F#" identifier="F#" label="F#"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
-                                <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
-                                <state key="normal" title="F#"/>
-                                <connections>
-                                    <action selector="PadButton_Up:" destination="277" eventType="touchUpInside" id="9707"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1510" customClass="PadButton">
-                                <rect key="frame" x="874" y="194" width="150" height="150"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.38039215686274508" green="0.48627450980392156" blue="0.54117647058823526" alpha="1" colorSpace="calibratedRGB"/>
-                                <accessibility key="accessibilityConfiguration" hint="G" identifier="G" label="G"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
-                                <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
-                                <state key="normal" title="G"/>
-                                <connections>
-                                    <action selector="PadButton_Up:" destination="277" eventType="touchUpInside" id="9711"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1511" customClass="PadButton">
-                                <rect key="frame" x="424" y="344" width="150" height="150"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.38039215686274508" green="0.48627450980392156" blue="0.54117647058823526" alpha="1" colorSpace="calibratedRGB"/>
-                                <accessibility key="accessibilityConfiguration" hint="Ab" identifier="Ab" label="Ab"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
-                                <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
-                                <state key="normal" title="Ab"/>
-                                <connections>
-                                    <action selector="PadButton_Up:" destination="277" eventType="touchUpInside" id="9712"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1512" customClass="PadButton">
-                                <rect key="frame" x="574" y="344" width="150" height="150"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.27058823529411763" green="0.35294117647058826" blue="0.3843137254901961" alpha="1" colorSpace="calibratedRGB"/>
-                                <accessibility key="accessibilityConfiguration" hint="A" identifier="A" label="A"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
-                                <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
-                                <state key="normal" title="A"/>
-                                <connections>
-                                    <action selector="PadButton_Up:" destination="277" eventType="touchUpInside" id="9713"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1513" customClass="PadButton">
-                                <rect key="frame" x="724" y="344" width="150" height="150"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.38039215686274508" green="0.48627450980392156" blue="0.54117647058823526" alpha="1" colorSpace="calibratedRGB"/>
-                                <accessibility key="accessibilityConfiguration" hint="Bb" identifier="Bb" label="Bb"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
-                                <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
-                                <state key="normal" title="Bb"/>
-                                <connections>
-                                    <action selector="PadButton_Up:" destination="277" eventType="touchUpInside" id="9714"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1514" customClass="PadButton">
-                                <rect key="frame" x="874" y="344" width="150" height="150"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.27058823529411763" green="0.35294117647058826" blue="0.3843137254901961" alpha="1" colorSpace="calibratedRGB"/>
-                                <accessibility key="accessibilityConfiguration" hint="B" identifier="B" label="B"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
-                                <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
-                                <state key="normal" title="B"/>
-                                <connections>
-                                    <action selector="PadButton_Up:" destination="277" eventType="touchUpInside" id="9715"/>
-                                </connections>
-                            </button>
                             <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.84999999999999998" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="1711">
-                                <rect key="frame" x="440" y="524" width="565" height="31"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <rect key="frame" x="627" y="524" width="378" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                             </slider>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1909">
-                                <rect key="frame" x="271" y="70" width="100" height="100"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1909" fixedFrame="YES">
+                                <rect key="frame" x="271" y="70" width="120" height="100"/>
                                 <color key="backgroundColor" red="0.75294117647058822" green="0.79607843137254897" blue="0.81176470588235294" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="tintColor" white="0.33333333333333298" alpha="1" colorSpace="calibratedWhite"/>
                                 <state key="normal" title="Tap Me">
@@ -225,6 +80,158 @@
                                         <real key="value" value="10"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Master Volume" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9958" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES">
+                                <rect key="frame" x="438" y="529" width="150" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1514" customClass="PadButton" fixedFrame="YES">
+                                <rect key="frame" x="874" y="344" width="150" height="150"/>
+                                <color key="backgroundColor" red="0.27058823529411763" green="0.35294117647058826" blue="0.3843137254901961" alpha="1" colorSpace="calibratedRGB"/>
+                                <accessibility key="accessibilityConfiguration" hint="B" identifier="B" label="B"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
+                                <state key="normal" title="B"/>
+                                <connections>
+                                    <action selector="PadButton_Up:" destination="277" eventType="touchUpInside" id="9715"/>
+                                </connections>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1513" customClass="PadButton" fixedFrame="YES">
+                                <rect key="frame" x="724" y="344" width="150" height="150"/>
+                                <color key="backgroundColor" red="0.38039215686274508" green="0.48627450980392156" blue="0.54117647058823526" alpha="1" colorSpace="calibratedRGB"/>
+                                <accessibility key="accessibilityConfiguration" hint="Bb" identifier="Bb" label="Bb"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
+                                <state key="normal" title="Bb"/>
+                                <connections>
+                                    <action selector="PadButton_Up:" destination="277" eventType="touchUpInside" id="9714"/>
+                                </connections>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1512" customClass="PadButton" fixedFrame="YES">
+                                <rect key="frame" x="574" y="344" width="150" height="150"/>
+                                <color key="backgroundColor" red="0.27058823529411763" green="0.35294117647058826" blue="0.3843137254901961" alpha="1" colorSpace="calibratedRGB"/>
+                                <accessibility key="accessibilityConfiguration" hint="A" identifier="A" label="A"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
+                                <state key="normal" title="A"/>
+                                <connections>
+                                    <action selector="PadButton_Up:" destination="277" eventType="touchUpInside" id="9713"/>
+                                </connections>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1511" customClass="PadButton" fixedFrame="YES">
+                                <rect key="frame" x="424" y="344" width="150" height="150"/>
+                                <color key="backgroundColor" red="0.38039215686274508" green="0.48627450980392156" blue="0.54117647058823526" alpha="1" colorSpace="calibratedRGB"/>
+                                <accessibility key="accessibilityConfiguration" hint="Ab" identifier="Ab" label="Ab"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
+                                <state key="normal" title="Ab"/>
+                                <connections>
+                                    <action selector="PadButton_Up:" destination="277" eventType="touchUpInside" id="9712"/>
+                                </connections>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1507" customClass="PadButton" fixedFrame="YES">
+                                <rect key="frame" x="424" y="194" width="150" height="150"/>
+                                <color key="backgroundColor" red="0.27058823529411763" green="0.35294117647058826" blue="0.3843137254901961" alpha="1" colorSpace="calibratedRGB"/>
+                                <accessibility key="accessibilityConfiguration" hint="E" identifier="E" label="E"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
+                                <state key="normal" title="E"/>
+                                <connections>
+                                    <action selector="PadButton_Up:" destination="277" eventType="touchUpInside" id="9702"/>
+                                </connections>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1508" customClass="PadButton" fixedFrame="YES">
+                                <rect key="frame" x="574" y="194" width="150" height="150"/>
+                                <color key="backgroundColor" red="0.38039215686274508" green="0.48627450980392156" blue="0.54117647058823526" alpha="1" colorSpace="calibratedRGB"/>
+                                <accessibility key="accessibilityConfiguration" hint="F" identifier="F" label="F"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
+                                <state key="normal" title="F"/>
+                                <connections>
+                                    <action selector="PadButton_Up:" destination="277" eventType="touchUpInside" id="9703"/>
+                                </connections>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1509" customClass="PadButton" fixedFrame="YES">
+                                <rect key="frame" x="724" y="194" width="150" height="150"/>
+                                <color key="backgroundColor" red="0.27058823529411763" green="0.35294117647058826" blue="0.3843137254901961" alpha="1" colorSpace="calibratedRGB"/>
+                                <accessibility key="accessibilityConfiguration" hint="F#" identifier="F#" label="F#"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
+                                <state key="normal" title="F#"/>
+                                <connections>
+                                    <action selector="PadButton_Up:" destination="277" eventType="touchUpInside" id="9707"/>
+                                </connections>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1510" customClass="PadButton" fixedFrame="YES">
+                                <rect key="frame" x="874" y="194" width="150" height="150"/>
+                                <color key="backgroundColor" red="0.38039215686274508" green="0.48627450980392156" blue="0.54117647058823526" alpha="1" colorSpace="calibratedRGB"/>
+                                <accessibility key="accessibilityConfiguration" hint="G" identifier="G" label="G"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
+                                <state key="normal" title="G"/>
+                                <connections>
+                                    <action selector="PadButton_Up:" destination="277" eventType="touchUpInside" id="9711"/>
+                                </connections>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1506" customClass="PadButton" fixedFrame="YES">
+                                <rect key="frame" x="873" y="45" width="150" height="150"/>
+                                <color key="backgroundColor" red="0.27058823529411763" green="0.35294117647058826" blue="0.3843137254901961" alpha="1" colorSpace="calibratedRGB"/>
+                                <accessibility key="accessibilityConfiguration" hint="D#" identifier="D#" label="D#"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
+                                <state key="normal" title="D#"/>
+                                <connections>
+                                    <action selector="PadButton_Up:" destination="277" eventType="touchUpInside" id="9701"/>
+                                </connections>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1505" customClass="PadButton" fixedFrame="YES">
+                                <rect key="frame" x="724" y="45" width="150" height="150"/>
+                                <color key="backgroundColor" red="0.38039215686274508" green="0.48627450980392156" blue="0.54117647058823526" alpha="1" colorSpace="calibratedRGB"/>
+                                <accessibility key="accessibilityConfiguration" hint="D" identifier="D" label="D"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
+                                <state key="normal" title="D"/>
+                                <connections>
+                                    <action selector="PadButton_Up:" destination="277" eventType="touchUpInside" id="9700"/>
+                                </connections>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1504" customClass="PadButton" fixedFrame="YES">
+                                <rect key="frame" x="574" y="45" width="150" height="150"/>
+                                <color key="backgroundColor" red="0.27058823529411763" green="0.35294117647058826" blue="0.3843137254901961" alpha="1" colorSpace="calibratedRGB"/>
+                                <accessibility key="accessibilityConfiguration" hint="C#" identifier="C#" label="C#"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
+                                <state key="normal" title="C#"/>
+                                <connections>
+                                    <action selector="PadButton_Up:" destination="277" eventType="touchUpInside" id="9696"/>
+                                </connections>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1499" customClass="PadButton" fixedFrame="YES">
+                                <rect key="frame" x="424" y="45" width="150" height="150"/>
+                                <color key="backgroundColor" red="0.38039215686274508" green="0.48627450980392156" blue="0.54117647058823526" alpha="1" colorSpace="calibratedRGB"/>
+                                <accessibility key="accessibilityConfiguration" hint="C" identifier="C" label="C"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
+                                <state key="normal" title="C"/>
+                                <connections>
+                                    <action selector="PadButton_Up:" destination="277" eventType="touchUpInside" id="9493"/>
+                                </connections>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.098039215686274508" green="0.12549019607843137" blue="0.13725490196078433" alpha="1" colorSpace="calibratedRGB"/>
@@ -234,19 +241,9 @@
                         <outlet property="bpmLabel" destination="1101" id="name-outlet-1101"/>
                         <outlet property="bpmStepperControl" destination="1100" id="name-outlet-1100"/>
                         <outlet property="bpmTapButton" destination="1909" id="name-outlet-1909"/>
-                        <outletCollection property="_padButtons" destination="1499" id="shA-VS-BiX"/>
-                        <outletCollection property="_padButtons" destination="1507" id="0fh-hg-9PA"/>
-                        <outletCollection property="_padButtons" destination="1511" id="wtV-ia-2LW"/>
-                        <outletCollection property="_padButtons" destination="1504" id="rcz-U6-v9E"/>
-                        <outletCollection property="_padButtons" destination="1508" id="fJf-xE-GB8"/>
-                        <outletCollection property="_padButtons" destination="1512" id="8D1-iG-11r"/>
-                        <outletCollection property="_padButtons" destination="1505" id="0bY-c9-Hwe"/>
-                        <outletCollection property="_padButtons" destination="1509" id="cwf-ao-TeV"/>
-                        <outletCollection property="_padButtons" destination="1513" id="zQW-5k-w3l"/>
-                        <outletCollection property="_padButtons" destination="1506" id="LNt-1i-5Zp"/>
-                        <outletCollection property="_padButtons" destination="1510" id="USm-px-EyO"/>
-                        <outletCollection property="_padButtons" destination="1514" id="DAe-4m-2Kx"/>
                     </connections>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="279" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
