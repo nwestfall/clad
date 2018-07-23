@@ -38,6 +38,9 @@ namespace Clad
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
+            //Audio Manager
+            AudioManager.Initialize(AudioManager.PadSounds.Classic);
+
             //Initialization logic
             bpmStepperControl.Value = BPM.CurrentBPM;
 
@@ -105,9 +108,9 @@ namespace Clad
             var key = sender.AccessibilityIdentifier;
             Debug.WriteLine($"Pad button tapped: {key}");
 
-            if(sender.Selected)
+            if(sender.IsPlaying)
             {
-                sender.Reset();
+                sender.Stop();
                 return;
             }
 

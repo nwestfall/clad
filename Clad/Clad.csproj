@@ -117,5 +117,8 @@
       <DependentUpon>PadButton.cs</DependentUpon>
     </Compile>
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Sounds\ClassicPadC.m4a" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>

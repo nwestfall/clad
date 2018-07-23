@@ -1,19 +1,135 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Threading;
 
 using Foundation;
 using AVFoundation;
 
 namespace Clad
 {
-    public class AudioManager
+    [Register(nameof(AudioManager))]
+    public class AudioManager : NSObject
     {
+        private readonly List<string> KEYS = new List<string>()
+        {
+            "C",
+            "C#",
+            "D",
+            "D#",
+            "E",
+            "F",
+            "F#",
+            "G",
+            "Ab",
+            "A",
+            "B",
+            "Bb"
+        };
+
+        public enum PadSounds
+        {
+            Unknown,
+            Classic
+        }
+
+        public enum SoundType
+        {
+            Unknown,
+            Click,
+            Pad
+        }
+
+        public static AudioManager Instance
+        {
+            get;
+            private set;
+        }
+
         private Dictionary<string, AVAudioPlayer> _audioPlayers = new Dictionary<string, AVAudioPlayer>();
 
-        public static Task<AudioManager> InitializeAsync()
+        private Dictionary<SoundType, AVAudioPlayer> _activePlayers = new Dictionary<SoundType, AVAudioPlayer>();
+
+        private PadSounds _padSound;
+
+        [Export(nameof(PadSound))]
+        public PadSounds PadSound
         {
-            return null;
+            get => _padSound;
+            set
+            {
+                WillChangeValue(nameof(PadSound));
+                _padSound = value;
+                DidChangeValue(nameof(PadSound));
+            }
+        }
+
+        private float _volume = 0.85F;
+
+        [Export(nameof(Volume))]
+        public float Volume
+        {
+            get => _volume;
+            set
+            {
+                WillChangeValue(nameof(Volume));
+                _volume = value;
+                DidChangeValue(nameof(Volume));
+            }
+        }
+
+        public static void Initialize(PadSounds padSound)
+        {
+            //TODO: Different sounds
+            Instance = new AudioManager();
+            Instance.PadSound = padSound;
+            //TODO: Loop
+            var audioPlayer = new AVAudioPlayer(GetSoundFile(padSound, "C"), "C", out NSError error);
+            audioPlayer.PrepareToPlay();
+            audioPlayer.NumberOfLoops = nint.MaxValue;
+            audioPlayer.Pan = 1;
+            audioPlayer.SoundSetting.AudioQuality = AVAudioQuality.High;
+            Instance._audioPlayers.Add("C", audioPlayer);
+        }
+
+        public async Task PlayAsync(string key)
+        {
+            //Check if running first, then pause
+            if (_activePlayers.ContainsKey(SoundType.Pad))
+                await StopAsync(SoundType.Pad);
+
+            if(_audioPlayers.TryGetValue(key, out AVAudioPlayer player))
+            {
+                player.Volume = Volume;
+                player.Play();
+                _activePlayers.Add(SoundType.Pad, player);
+            }
+        }
+
+        public async Task StopAsync(SoundType soundType)
+        {
+            if(_activePlayers.TryGetValue(SoundType.Pad, out AVAudioPlayer player))
+            {
+                //Fade
+                await Task.Run(() =>
+                {
+                    var currentVolume = player.Volume;
+                    for (var i = currentVolume; i >= 0; i = i - 0.05F)
+                    {
+                        player.Volume = i;
+                        Thread.Sleep(150);
+                    }
+                });
+                player.Stop();
+                player.CurrentTime = 0;
+                _activePlayers.Remove(SoundType.Pad);
+            }
+        }
+
+        private static NSUrl GetSoundFile(PadSounds padSounds, string key)
+        {
+            //TODO
+            return new NSUrl("Sounds/ClassicPadC.m4a");
         }
     }
 }

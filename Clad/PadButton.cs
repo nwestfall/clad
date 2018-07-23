@@ -1,5 +1,6 @@
 using Foundation;
 using System;
+using System.Diagnostics;
 using UIKit;
 
 namespace Clad
@@ -31,9 +32,18 @@ namespace Clad
 
         public void Play()
         {
+            Debug.WriteLine($"Play Pad: ${AccessibilityIdentifier}");
             IsPlaying = true;
             SetTitleColor(UIColor.DarkGray, UIControlState.Normal);
             BackgroundColor = UIColor.FromRGB(207, 216, 220);
+            AudioManager.Instance.PlayAsync(AccessibilityIdentifier);
+        }
+
+        public void Stop()
+        {
+            Debug.WriteLine($"Stop Pad: ${AccessibilityIdentifier}");
+            Reset();
+            AudioManager.Instance.StopAsync(AudioManager.SoundType.Pad);
         }
 
         public void Reset()
