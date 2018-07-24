@@ -11,7 +11,7 @@ namespace Clad
     [Register(nameof(AudioManager))]
     public class AudioManager : NSObject
     {
-        private readonly List<string> KEYS = new List<string>()
+        private readonly static List<string> KEYS = new List<string>()
         {
             "C",
             "C#",
@@ -84,12 +84,16 @@ namespace Clad
             Instance = new AudioManager();
             Instance.PadSound = padSound;
             //TODO: Loop
-            var audioPlayer = new AVAudioPlayer(GetSoundFile(padSound, "C"), "C", out NSError error);
-            audioPlayer.PrepareToPlay();
-            audioPlayer.NumberOfLoops = nint.MaxValue;
-            audioPlayer.Pan = 1;
-            audioPlayer.SoundSetting.AudioQuality = AVAudioQuality.High;
-            Instance._audioPlayers.Add("C", audioPlayer);
+            foreach (var key in KEYS)
+            {
+                var audioPlayer = new AVAudioPlayer(GetSoundFile(padSound, key), key, out NSError error);
+                audioPlayer.NumberOfLoops = -1;
+                audioPlayer.Pan = 1;
+                audioPlayer.PrepareToPlay();
+                audioPlayer.SoundSetting.AudioQuality = AVAudioQuality.High;
+                Instance._audioPlayers.Add(key, audioPlayer);
+                break;
+            }
         }
 
         public async Task PlayAsync(string key)
@@ -147,10 +151,6 @@ namespace Clad
             base.Dispose(disposing);
         }
 
-        private static NSUrl GetSoundFile(PadSounds padSounds, string key)
-        {
-            //TODO
-            return new NSUrl("Sounds/ClassicPadC.m4a");
-        }
+        static NSUrl GetSoundFile(PadSounds padSounds, string key) => new NSUrl($"Sounds/{padSounds.ToString()}/{key}.m4a");
     }
 }
