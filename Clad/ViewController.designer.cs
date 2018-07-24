@@ -25,9 +25,29 @@ namespace Clad
         [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UIButton bpmTapButton { get; set; }
 
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UINavigationBar navBar { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UITableView setlistTable { get; set; }
+
 
         [Action ("PadButton_Up:")]
         partial void PadButton_Up (Clad.PadButton sender);
+
+        [Action ("Add_Action:")]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        partial void Add_Action (UIKit.UIBarButtonItem sender);
+
+        [Action ("Edit_Action:")]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        partial void Edit_Action (UIKit.UIBarButtonItem sender);
+
+        [Action ("Settings_Action:")]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        partial void Settings_Action (UIKit.UIBarButtonItem sender);
 
         void ReleaseDesignerOutlets ()
         {
@@ -44,6 +64,16 @@ namespace Clad
             if (bpmTapButton != null) {
                 bpmTapButton.Dispose ();
                 bpmTapButton = null;
+            }
+
+            if (navBar != null) {
+                navBar.Dispose ();
+                navBar = null;
+            }
+
+            if (setlistTable != null) {
+                setlistTable.Dispose ();
+                setlistTable = null;
             }
         }
     }

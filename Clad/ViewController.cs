@@ -29,21 +29,10 @@ namespace Clad
 
         IList<IDisposable> _observablesToDispose = new List<IDisposable>();
 
-        UIGestureRecognizer _bpmLabelGesture = new UIGestureRecognizer(() =>
+        private SetlistSource _setlistSource = new SetlistSource(new List<SetlistModel>()
         {
-            var alertController = UIAlertController.Create("Enter BPM", "", UIAlertControllerStyle.Alert);
-            alertController.AddTextField(textField =>
-            {
-                textField.KeyboardType = UIKeyboardType.NumberPad;
-            });
-
-            var cancelAction = UIAlertAction.Create("Cancel", UIAlertActionStyle.Cancel, alertAction => Debug.WriteLine("BPM Label Input Cancelled"));
-            var okayAction = UIAlertAction.Create("Set", UIAlertActionStyle.Default, alertAction => Debug.WriteLine("BPM Set"));
-
-            alertController.AddAction(cancelAction);
-            alertController.AddAction(okayAction);
-
-            UIApplication.SharedApplication.KeyWindow.RootViewController.PresentViewController(alertController, true, () => Debug.WriteLine("Completed showing alert"));
+            new SetlistModel(120, "C"),
+            new SetlistModel(155, "D")
         });
 
         protected ViewController(IntPtr handle) : base(handle)
@@ -60,6 +49,7 @@ namespace Clad
 
             //Initialization logic
             bpmStepperControl.Value = BPM.CurrentBPM;
+            setlistTable.Source = _setlistSource;
 
             //Style
             bpmTapButton.SetTitleColor(UIColor.DarkGray, UIControlState.Normal);
@@ -70,7 +60,6 @@ namespace Clad
             bpmTapButton.TouchDown += BpmTapButton_TouchDown;
             bpmTapButton.TouchUpInside += BpmTapButton_TouchUpInside;
             bpmLabel.UserInteractionEnabled = true;
-            bpmLabel.AddGestureRecognizer(_bpmLabelGesture);
 
             //Observers
             _observablesToDispose.Add(BPM.AddObserver(nameof(BPMModel.CurrentBPM), NSKeyValueObservingOptions.New, (observed) =>
@@ -92,7 +81,7 @@ namespace Clad
             bpmStepperControl.ValueChanged -= BpmStepperControl_ValueChanged;
             bpmTapButton.TouchDown -= BpmTapButton_TouchDown;
             bpmTapButton.TouchUpInside -= BpmTapButton_TouchUpInside;
-            bpmLabel.RemoveGestureRecognizer(_bpmLabelGesture);
+
             //Observers
             foreach (var observable in _observablesToDispose)
                 observable?.Dispose();
@@ -121,6 +110,26 @@ namespace Clad
             UIStepper stepper = (UIStepper)sender;
             Debug.WriteLine($"BPM Stepper Change: {stepper.Value}");
             BPM.CurrentBPM = (int)stepper.Value;
+        }
+
+        partial void Edit_Action(UIBarButtonItem sender)
+        {
+            Debug.WriteLine("Edit Action");
+            if (setlistTable.Editing)
+                setlistTable.SetEditing(false, true);
+            else
+                setlistTable.SetEditing(true, true);
+        }
+
+        partial void Add_Action(UIBarButtonItem sender)
+        {
+            Debug.WriteLine("Add Action");
+
+        }
+
+        partial void Settings_Action(UIBarButtonItem sender)
+        {
+            Debug.WriteLine("Settings Action");
         }
 
         partial void PadButton_Up(PadButton sender)

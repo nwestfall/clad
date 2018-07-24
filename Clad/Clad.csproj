@@ -117,6 +117,8 @@
     <Compile Include="PadButton.designer.cs">
       <DependentUpon>PadButton.cs</DependentUpon>
     </Compile>
+    <Compile Include="SetlistSource.cs" />
+    <Compile Include="Models\SetlistModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Sounds\Classic\C.m4a" />

@@ -21,12 +21,36 @@
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" barStyle="black" translatesAutoresizingMaskIntoConstraints="NO" id="1070">
+                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1070" barStyle="black" largeTitles="YES">
                                 <rect key="frame" x="0.0" y="0.0" width="1024" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <items>
-                                    <navigationItem title="Clad" id="1071"/>
+                                    <navigationItem title="Clad" id="1071">
+                                        <barButtonItem key="rightBarButtonItem" id="11671" style="plain" title="Settings">
+                                            <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
+                                            <connections>
+                                                <action selector="Settings_Action:" destination="277" id="11672"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <leftBarButtonItems>
+                                            <barButtonItem id="11668" style="plain" systemItem="add">
+                                                <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
+                                                <connections>
+                                                    <action selector="Add_Action:" destination="277" id="11673"/>
+                                                </connections>
+                                            </barButtonItem>
+                                            <barButtonItem id="11908" systemItem="edit">
+                                                <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
+                                                <connections>
+                                                    <action selector="Edit_Action:" destination="277" id="11909"/>
+                                                </connections>
+                                            </barButtonItem>
+                                        </leftBarButtonItems>
+                                    </navigationItem>
                                 </items>
+                                <textAttributes key="titleTextAttributes">
+                                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                </textAttributes>
                             </navigationBar>
                             <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="500" translatesAutoresizingMaskIntoConstraints="NO" id="1100">
                                 <rect key="frame" x="46" y="141" width="94" height="29"/>
@@ -54,16 +78,6 @@
                                     </fragment>
                                 </attributedString>
                             </label>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1102">
-                                <rect key="frame" x="0.0" y="194" width="420" height="574"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES"/>
-                                <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="1106">
-                                        <rect key="frame" x="0.0" y="0.0" width="420" height="574"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                    </stackView>
-                                </subviews>
-                            </scrollView>
                             <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.84999999999999998" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="1711">
                                 <rect key="frame" x="627" y="524" width="378" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
@@ -233,6 +247,31 @@
                                     <action selector="PadButton_Up:" destination="277" eventType="touchUpInside" id="9493"/>
                                 </connections>
                             </button>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="28" sectionFooterHeight="28" id="11674" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES" springLoaded="YES">
+                                <rect key="frame" x="0.0" y="216" width="421.5" height="552"/>
+                                <autoresizingMask key="autoresizingMask" heightSizable="YES" widthSizable="YES" flexibleMaxX="YES"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="gray" indentationWidth="10" id="11675" accessoryType="detailDisclosureButton" rowHeight="100" reuseIdentifier="TableCell">
+                                        <rect key="frame" x="0.0" y="28" width="421.5" height="100"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="11675" id="11676">
+                                            <rect key="frame" x="0.0" y="0.0" width="354.5" height="99.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" colorSpace="calibratedRGB" red="0.38039215686274508" green="0.48627450980392156" blue="0.54117647058823526" alpha="1"/>
+                                        <inset key="separatorInset" minX="13" minY="0.0" maxX="2" maxY="0.0"/>
+                                        <accessibility key="accessibilityConfiguration">
+                                            <bool key="isElement" value="YES"/>
+                                        </accessibility>
+                                    </tableViewCell>
+                                </prototypes>
+                                <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
+                                <color key="backgroundColor" colorSpace="calibratedRGB" red="0.098039215686274508" green="0.12549019607843137" blue="0.13725490196078433" alpha="1"/>
+                                <color key="sectionIndexBackgroundColor" colorSpace="calibratedRGB" red="0.098039215686274508" green="0.12549019607843137" blue="0.13725490196078433" alpha="1"/>
+                                <color key="sectionIndexTrackingBackgroundColor" colorSpace="calibratedRGB" red="0.098039215686274508" green="0.12549019607843137" blue="0.13725490196078433" alpha="1"/>
+                                <color key="separatorColor" colorSpace="calibratedRGB" red="0.27058823529411763" green="0.35294117647058826" blue="0.3843137254901961" alpha="1"/>
+                                <color key="sectionIndexColor" cocoaTouchSystemColor="lightTextColor"/>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" red="0.098039215686274508" green="0.12549019607843137" blue="0.13725490196078433" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
@@ -255,6 +294,8 @@
                         <outletCollection property="_padButtons" destination="1506" id="qTA-Oc-kUe"/>
                         <outletCollection property="_padButtons" destination="1510" id="eSi-bE-1ex"/>
                         <outletCollection property="_padButtons" destination="1514" id="YG6-6r-7Zx"/>
+                        <outlet property="navBar" destination="1070" id="name-outlet-1070"/>
+                        <outlet property="setlistTable" destination="11674" id="name-outlet-11674"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="279" userLabel="First Responder" sceneMemberID="firstResponder"/>
