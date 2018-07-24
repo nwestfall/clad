@@ -32,20 +32,6 @@
                                                 <action selector="Settings_Action:" destination="277" id="11672"/>
                                             </connections>
                                         </barButtonItem>
-                                        <leftBarButtonItems>
-                                            <barButtonItem id="11668" style="plain" systemItem="add">
-                                                <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
-                                                <connections>
-                                                    <action selector="Add_Action:" destination="277" id="11673"/>
-                                                </connections>
-                                            </barButtonItem>
-                                            <barButtonItem id="11908" systemItem="edit">
-                                                <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
-                                                <connections>
-                                                    <action selector="Edit_Action:" destination="277" id="11909"/>
-                                                </connections>
-                                            </barButtonItem>
-                                        </leftBarButtonItems>
                                     </navigationItem>
                                 </items>
                                 <textAttributes key="titleTextAttributes">

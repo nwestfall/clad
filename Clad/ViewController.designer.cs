@@ -37,14 +37,6 @@ namespace Clad
         [Action ("PadButton_Up:")]
         partial void PadButton_Up (Clad.PadButton sender);
 
-        [Action ("Add_Action:")]
-        [GeneratedCode ("iOS Designer", "1.0")]
-        partial void Add_Action (UIKit.UIBarButtonItem sender);
-
-        [Action ("Edit_Action:")]
-        [GeneratedCode ("iOS Designer", "1.0")]
-        partial void Edit_Action (UIKit.UIBarButtonItem sender);
-
         [Action ("Settings_Action:")]
         [GeneratedCode ("iOS Designer", "1.0")]
         partial void Settings_Action (UIKit.UIBarButtonItem sender);

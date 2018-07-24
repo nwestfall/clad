@@ -35,6 +35,10 @@ namespace Clad
             new SetlistModel(155, "D")
         });
 
+        UIBarButtonItem _addNavButton;
+        UIBarButtonItem _editNavButton;
+        UIBarButtonItem _doneNavButton;
+
         protected ViewController(IntPtr handle) : base(handle)
         {
             // Note: this .ctor should not contain any initialization logic.
@@ -46,6 +50,8 @@ namespace Clad
             base.ViewDidLoad();
             //Audio Manager
             AudioManager.Initialize(AudioManager.PadSounds.Classic);
+
+            SetupNavBar();
 
             //Initialization logic
             bpmStepperControl.Value = BPM.CurrentBPM;
@@ -97,6 +103,63 @@ namespace Clad
 
         public override bool PrefersStatusBarHidden() => true;
 
+        void SetupNavBar()
+        {
+            _addNavButton = new UIBarButtonItem(UIBarButtonSystemItem.Add, (sender, e) =>
+            {
+                Debug.WriteLine("Add Action");
+            })
+            {
+                TintColor = UIColor.LightTextColor
+            };
+            _editNavButton = new UIBarButtonItem(UIBarButtonSystemItem.Edit, (sender, e) =>
+            {
+                Debug.WriteLine("Edit Action");
+                ToggleSetlistEdit();
+            })
+            {
+                TintColor = UIColor.LightTextColor
+            };
+            _doneNavButton = new UIBarButtonItem(UIBarButtonSystemItem.Done, (sender, e) =>
+            {
+                Debug.WriteLine("Done Action");
+                ToggleSetlistEdit();
+            })
+            {
+                TintColor = UIColor.LightTextColor
+            };
+
+            var item = navBar.Items;
+            item[0].LeftBarButtonItems = new UIBarButtonItem[]
+            {
+                _addNavButton,
+                _editNavButton
+            };
+        }
+
+        void ToggleSetlistEdit()
+        {
+            UIBarButtonItem buttonToUse = null;
+            if (setlistTable.Editing)
+            {
+                setlistTable.SetEditing(false, true);
+                buttonToUse = _editNavButton;
+            }
+            else
+            {
+                setlistTable.SetEditing(true, true);
+                buttonToUse = _doneNavButton;
+            }
+
+            var items = navBar.Items;
+            items[0].LeftBarButtonItems = new UIBarButtonItem[]
+            {
+                _addNavButton,
+                buttonToUse
+            };
+            navBar.Items = items;
+        }
+
         #region Events
         void BpmTapButton_TouchDown(object sender, EventArgs e)
         {
@@ -110,21 +173,6 @@ namespace Clad
             UIStepper stepper = (UIStepper)sender;
             Debug.WriteLine($"BPM Stepper Change: {stepper.Value}");
             BPM.CurrentBPM = (int)stepper.Value;
-        }
-
-        partial void Edit_Action(UIBarButtonItem sender)
-        {
-            Debug.WriteLine("Edit Action");
-            if (setlistTable.Editing)
-                setlistTable.SetEditing(false, true);
-            else
-                setlistTable.SetEditing(true, true);
-        }
-
-        partial void Add_Action(UIBarButtonItem sender)
-        {
-            Debug.WriteLine("Add Action");
-
         }
 
         partial void Settings_Action(UIBarButtonItem sender)
