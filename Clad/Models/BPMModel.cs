@@ -1,5 +1,6 @@
 ﻿using System;
 using Foundation;
+using UIKit;
 
 namespace Clad.Models
 {
@@ -47,6 +48,20 @@ namespace Clad.Models
                 //In interval, check
                 CurrentBPM = (int)(TICKS_PER_MINUTE / totalMilliseconds);
             }
+        }
+
+        /// <summary>
+        /// Gets the BPMA ttributed string.
+        /// </summary>
+        /// <returns>The BPMA ttributed string.</returns>
+        /// <param name="bpm">Bpm.</param>
+        public NSAttributedString GetBPMAttributedString(int bpm, int fontSize = 22)
+        {
+            var attributedString = new NSMutableAttributedString($"{bpm}bpm");
+            attributedString.BeginEditing();
+            attributedString.AddAttribute(UIStringAttributeKey.Font, UIFont.SystemFontOfSize(fontSize, UIFontWeight.Regular), new NSRange(bpm.ToString().Length, 3));
+            attributedString.EndEditing();
+            return attributedString;
         }
 
         public BPMModel()

@@ -11,7 +11,7 @@ namespace Clad
     [Register(nameof(AudioManager))]
     public class AudioManager : NSObject
     {
-        private readonly static List<string> KEYS = new List<string>()
+        public readonly static List<string> KEYS = new List<string>()
         {
             "C",
             "C#",

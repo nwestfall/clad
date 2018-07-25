@@ -10,17 +10,17 @@ namespace Clad
 {
     public class SetlistSource : UITableViewSource
     {
-        IList<SetlistModel> _tableItems;
+        public IList<SetlistModel> Items;
         string _cellIdentifier = "TableCell";
 
         public SetlistSource() { }
 
         public SetlistSource(IList<SetlistModel> items)
         {
-            _tableItems = items;
+            Items = items;
         }
 
-        public override nint RowsInSection(UITableView tableview, nint section) => _tableItems.Count;
+        public override nint RowsInSection(UITableView tableview, nint section) => Items.Count;
 
         public override bool CanEditRow(UITableView tableView, NSIndexPath indexPath) => true;
 
@@ -28,7 +28,7 @@ namespace Clad
 
         public override void MoveRow(UITableView tableView, NSIndexPath sourceIndexPath, NSIndexPath destinationIndexPath)
         {
-            var item = _tableItems[sourceIndexPath.Row];
+            var item = Items[sourceIndexPath.Row];
             var deleteAt = sourceIndexPath.Row;
             var insertAt = destinationIndexPath.Row;
 
@@ -43,8 +43,8 @@ namespace Clad
                 // add one to where we insert, because we haven't deleted the original yet
                 insertAt += 1;
             }
-            _tableItems.Insert(insertAt, item);
-            _tableItems.RemoveAt(deleteAt);
+            Items.Insert(insertAt, item);
+            Items.RemoveAt(deleteAt);
         }
 
         public override void CommitEditingStyle(UITableView tableView, UITableViewCellEditingStyle editingStyle, NSIndexPath indexPath)
@@ -52,7 +52,7 @@ namespace Clad
             switch(editingStyle)
             {
                 case UITableViewCellEditingStyle.Delete:
-                    _tableItems.RemoveAt(indexPath.Row);
+                    Items.RemoveAt(indexPath.Row);
                     tableView.DeleteRows(new NSIndexPath[] { indexPath }, UITableViewRowAnimation.Fade);
                     break;
                 case UITableViewCellEditingStyle.None:
@@ -68,7 +68,7 @@ namespace Clad
         public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
         {
             UITableViewCell cell = tableView.DequeueReusableCell(_cellIdentifier);
-            var item = _tableItems[indexPath.Row];
+            var item = Items[indexPath.Row];
 
             cell.TextLabel.Text = $"{item.Key} - {item.BPM}";
             cell.TextLabel.MinimumFontSize = 24;

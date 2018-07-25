@@ -1,6 +1,7 @@
 ﻿using System;
 using Foundation;
 using System.Globalization;
+using System.Collections.Generic;
 using CoreGraphics;
 
 namespace Clad
@@ -175,6 +176,19 @@ namespace Clad
         public static double ToDouble(this NSObject nsO)
         {
             return (double)ToObject(nsO, typeof(double));
+        }
+
+        /// <summary>
+        /// Converts a List<string> to a NSString array
+        /// </summary>
+        /// <returns>The NSString array.</returns>
+        /// <param name="list">List.</param>
+        public static NSString[] ToNSStringArray(this List<string> list)
+        {
+            var nsArray = new NSString[list.Count];
+            for (var i = 0; i < list.Count; i++)
+                nsArray[i] = new NSString(list[i]);
+            return nsArray;
         }
         #endregion
     }

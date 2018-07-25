@@ -119,6 +119,8 @@
     </Compile>
     <Compile Include="SetlistSource.cs" />
     <Compile Include="Models\SetlistModel.cs" />
+    <Compile Include="AddPopupView.cs" />
+    <Compile Include="SetlistEventHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Sounds\Classic\C.m4a" />

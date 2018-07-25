@@ -4,11 +4,12 @@ using System.Collections.Generic;
 
 using Foundation;
 using UIKit;
+using CoreGraphics;
 using Clad.Models;
 
 namespace Clad
 {
-    public partial class ViewController : UIViewController
+    public partial class ViewController : UIViewController, IUIPopoverPresentationControllerDelegate
     {
         private BPMModel _bpmModel = new BPMModel();
 
@@ -29,15 +30,14 @@ namespace Clad
 
         IList<IDisposable> _observablesToDispose = new List<IDisposable>();
 
-        private SetlistSource _setlistSource = new SetlistSource(new List<SetlistModel>()
-        {
-            new SetlistModel(120, "C"),
-            new SetlistModel(155, "D")
-        });
+        private SetlistSource _setlistSource = new SetlistSource(new List<SetlistModel>());
 
         UIBarButtonItem _addNavButton;
         UIBarButtonItem _editNavButton;
         UIBarButtonItem _doneNavButton;
+
+        AddPopupView _popView;
+        UIViewController _addPopupController;
 
         protected ViewController(IntPtr handle) : base(handle)
         {
@@ -51,6 +51,7 @@ namespace Clad
             //Audio Manager
             AudioManager.Initialize(AudioManager.PadSounds.Classic);
 
+            //Setup Views
             SetupNavBar();
 
             //Initialization logic
@@ -72,11 +73,7 @@ namespace Clad
             {
                 int newValue = observed.NewValue.ToInt();
                 Debug.WriteLine($"{nameof(BPMModel.CurrentBPM)} changed: {newValue}");
-                var attributedString = new NSMutableAttributedString($"{newValue}bpm");
-                attributedString.BeginEditing();
-                attributedString.AddAttribute(UIStringAttributeKey.Font, UIFont.SystemFontOfSize(22, UIFontWeight.Regular), new NSRange(newValue.ToString().Length, 3));
-                attributedString.EndEditing();
-                bpmLabel.AttributedText = attributedString;
+                bpmLabel.AttributedText = _bpmModel.GetBPMAttributedString(newValue);
                 bpmStepperControl.Value = newValue;
             }));
         }
@@ -99,6 +96,17 @@ namespace Clad
         {
             base.DidReceiveMemoryWarning();
             // Release any cached data, images, etc that aren't in use
+            if (_popView != null)
+            {
+                _popView.SetlistAdded -= _popView_SetlistAdded;
+                _popView.Dispose();
+                _popView = null;
+            }
+            if (_addPopupController != null)
+            {
+                _addPopupController?.Dispose();
+                _addPopupController = null;
+            }
         }
 
         public override bool PrefersStatusBarHidden() => true;
@@ -108,6 +116,29 @@ namespace Clad
             _addNavButton = new UIBarButtonItem(UIBarButtonSystemItem.Add, (sender, e) =>
             {
                 Debug.WriteLine("Add Action");
+
+                if(_popView == null)
+                {
+                    _popView = new AddPopupView(BPM);
+                    _popView.SetlistAdded += _popView_SetlistAdded;
+                }
+
+                if (_addPopupController == null)
+                {
+                    _addPopupController = new UIViewController()
+                    {
+                        ModalPresentationStyle = UIModalPresentationStyle.Popover,
+                        PreferredContentSize = new CGSize(500, 200),
+                        View = _popView
+                    };
+                }
+
+                _addPopupController.PopoverPresentationController.BackgroundColor = UIColor.LightGray;
+                _addPopupController.PopoverPresentationController.SourceRect = new CGRect(50, 50, 500, 300);
+                _addPopupController.PopoverPresentationController.BarButtonItem = _addNavButton;
+                _addPopupController.PopoverPresentationController.SourceView = View;
+
+                PresentViewController(_addPopupController, true, null);
             })
             {
                 TintColor = UIColor.LightTextColor
@@ -167,7 +198,6 @@ namespace Clad
             bpmTapButton.BackgroundColor = UIColor.FromRGB(97, 125, 138);
         }
 
-
         void BpmStepperControl_ValueChanged(object sender, EventArgs e)
         {
             UIStepper stepper = (UIStepper)sender;
@@ -194,7 +224,7 @@ namespace Clad
             //Reset
             foreach (var padButton in _padButtons)
                 padButton.Reset();
-
+            
             //Highlight
             sender.Play();
         }
@@ -202,6 +232,21 @@ namespace Clad
         void BpmTapButton_TouchUpInside(object sender, EventArgs e)
         {
             bpmTapButton.BackgroundColor = UIColor.FromRGB(192, 203, 208);
+        }
+
+        void _popView_SetlistAdded(object sender, SetlistEventArgs e)
+        {
+            _setlistSource.Items.Add(e.Setlist);
+            setlistTable.InsertRows(new NSIndexPath[] { NSIndexPath.Create(0, _setlistSource.Items.Count - 1) }, UITableViewRowAnimation.Automatic);
+            _addPopupController.DismissViewController(true, () =>
+            {
+                Debug.WriteLine("Add Popup Dismissed");
+                _popView.SetlistAdded -= _popView_SetlistAdded;
+                _popView?.Dispose();
+                _popView = null;
+                _addPopupController?.Dispose();
+                _addPopupController = null;
+            });
         }
         #endregion
     }
