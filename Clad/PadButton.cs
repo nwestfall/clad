@@ -3,6 +3,8 @@ using System;
 using System.Diagnostics;
 using UIKit;
 
+using Clad.Audio;
+
 namespace Clad
 {
     public partial class PadButton : UIButton

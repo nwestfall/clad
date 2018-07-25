@@ -6,7 +6,7 @@ using System.Threading;
 using Foundation;
 using AVFoundation;
 
-namespace Clad
+namespace Clad.Audio
 {
     [Register(nameof(AudioManager))]
     public class AudioManager : NSObject
@@ -126,6 +126,7 @@ namespace Clad
                 });
                 player.Stop();
                 player.CurrentTime = 0;
+                player.PrepareToPlay();
                 _activePlayers.Remove(SoundType.Pad);
             }
         }

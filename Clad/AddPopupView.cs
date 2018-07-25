@@ -5,6 +5,7 @@ using CoreGraphics;
 using UIKit;
 using Foundation;
 using Clad.Models;
+using Clad.Audio;
 
 namespace Clad
 {

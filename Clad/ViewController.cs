@@ -6,10 +6,11 @@ using Foundation;
 using UIKit;
 using CoreGraphics;
 using Clad.Models;
+using Clad.Audio;
 
 namespace Clad
 {
-    public partial class ViewController : UIViewController, IUIPopoverPresentationControllerDelegate
+    public partial class ViewController : UIViewController, IUITableViewDelegate
     {
         private BPMModel _bpmModel = new BPMModel();
 
@@ -57,6 +58,7 @@ namespace Clad
             //Initialization logic
             bpmStepperControl.Value = BPM.CurrentBPM;
             setlistTable.Source = _setlistSource;
+            setlistTable.Delegate = this;
 
             //Style
             bpmTapButton.SetTitleColor(UIColor.DarkGray, UIControlState.Normal);
@@ -191,6 +193,29 @@ namespace Clad
             navBar.Items = items;
         }
 
+        [Export("tableView:didSelectRowAtIndexPath:")]
+        public void RowSelected(UITableView tableView, NSIndexPath indexPath)
+        {
+            Debug.WriteLine($"Setlist Row Selected: {indexPath.Row}");
+            var setlist = _setlistSource.Items[indexPath.Row];
+            BPM.CurrentBPM = setlist.BPM;
+
+            //Manage Pad Button
+            foreach (var padButton in _padButtons)
+            {
+                if (padButton.AccessibilityIdentifier.Equals(setlist.Key, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    padButton.Play();
+                    continue;
+                }
+
+                if (padButton.IsPlaying)
+                    padButton.Stop();
+                else
+                    padButton.Reset();
+            }
+        }
+
         #region Events
         void BpmTapButton_TouchDown(object sender, EventArgs e)
         {
@@ -203,6 +228,9 @@ namespace Clad
             UIStepper stepper = (UIStepper)sender;
             Debug.WriteLine($"BPM Stepper Change: {stepper.Value}");
             BPM.CurrentBPM = (int)stepper.Value;
+
+            if (setlistTable.IndexPathForSelectedRow != null)
+                setlistTable.DeselectRow(setlistTable.IndexPathForSelectedRow, true);
         }
 
         partial void Settings_Action(UIBarButtonItem sender)
@@ -214,6 +242,9 @@ namespace Clad
         {
             var key = sender.AccessibilityIdentifier;
             Debug.WriteLine($"Pad button tapped: {key}");
+
+            if (setlistTable.IndexPathForSelectedRow != null)
+                setlistTable.DeselectRow(setlistTable.IndexPathForSelectedRow, true);
 
             if(sender.IsPlaying)
             {

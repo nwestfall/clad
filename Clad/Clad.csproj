@@ -93,6 +93,7 @@
     <Folder Include="Models\" />
     <Folder Include="Resources\Sounds\" />
     <Folder Include="Resources\Sounds\Classic\" />
+    <Folder Include="Audio\" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="LaunchScreen.storyboard" />
@@ -112,7 +113,6 @@
     </Compile>
     <Compile Include="Models\BPMModel.cs" />
     <Compile Include="NSObjectConverter.cs" />
-    <Compile Include="AudioManager.cs" />
     <Compile Include="PadButton.cs" />
     <Compile Include="PadButton.designer.cs">
       <DependentUpon>PadButton.cs</DependentUpon>
@@ -121,6 +121,9 @@
     <Compile Include="Models\SetlistModel.cs" />
     <Compile Include="AddPopupView.cs" />
     <Compile Include="SetlistEventHandler.cs" />
+    <Compile Include="Audio\AudioManager.cs" />
+    <Compile Include="Audio\Metronome.cs" />
+    <Compile Include="Audio\AudioGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Sounds\Classic\C.m4a" />
