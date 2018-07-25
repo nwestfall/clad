@@ -34,7 +34,7 @@ namespace Clad
 
         public void Play()
         {
-            Debug.WriteLine($"Play Pad: ${AccessibilityIdentifier}");
+            Debug.WriteLine($"Play Pad: {AccessibilityIdentifier}");
             IsPlaying = true;
             SetTitleColor(UIColor.DarkGray, UIControlState.Normal);
             BackgroundColor = UIColor.FromRGB(207, 216, 220);
@@ -43,7 +43,7 @@ namespace Clad
 
         public void Stop()
         {
-            Debug.WriteLine($"Stop Pad: ${AccessibilityIdentifier}");
+            Debug.WriteLine($"Stop Pad: {AccessibilityIdentifier}");
             Reset();
             AudioManager.Instance.StopAsync(AudioManager.SoundType.Pad);
         }

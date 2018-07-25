@@ -64,17 +64,45 @@ namespace Clad.Audio
             }
         }
 
-        private float _volume = 0.85F;
+        private float _masterVolume = 0.85F;
 
-        [Export(nameof(Volume))]
-        public float Volume
+        [Export(nameof(MasterVolume))]
+        public float MasterVolume
         {
-            get => _volume;
+            get => _masterVolume;
             set
             {
-                WillChangeValue(nameof(Volume));
-                _volume = value;
-                DidChangeValue(nameof(Volume));
+                WillChangeValue(nameof(MasterVolume));
+                _masterVolume = value;
+                DidChangeValue(nameof(MasterVolume));
+            }
+        }
+
+        private float _padVolume = 0.085F;
+
+        [Export(nameof(PadVolume))]
+        public float PadVolume
+        {
+            get => _padVolume;
+            set
+            {
+                WillChangeValue(nameof(PadVolume));
+                _padVolume = value;
+                DidChangeValue(nameof(PadVolume));
+            }
+        }
+
+        private float _clickVolume;
+
+        [Export(nameof(ClickVolume))]
+        public float ClickVolume
+        {
+            get => _clickVolume;
+            set
+            {
+                WillChangeValue(nameof(ClickVolume));
+                _clickVolume = value;
+                DidChangeValue(nameof(ClickVolume));
             }
         }
 
@@ -83,7 +111,6 @@ namespace Clad.Audio
             //TODO: Different sounds
             Instance = new AudioManager();
             Instance.PadSound = padSound;
-            //TODO: Loop
             foreach (var key in KEYS)
             {
                 var audioPlayer = new AVAudioPlayer(GetSoundFile(padSound, key), key, out NSError error);
@@ -104,7 +131,7 @@ namespace Clad.Audio
 
             if(_audioPlayers.TryGetValue(key, out AVAudioPlayer player))
             {
-                player.Volume = Volume;
+                player.Volume = MasterVolume;
                 player.Play();
                 _activePlayers.Add(SoundType.Pad, player);
             }

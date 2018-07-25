@@ -43,7 +43,6 @@ namespace Clad
         protected ViewController(IntPtr handle) : base(handle)
         {
             // Note: this .ctor should not contain any initialization logic.
-
         }
 
         public override void ViewDidLoad()
@@ -263,6 +262,65 @@ namespace Clad
         void BpmTapButton_TouchUpInside(object sender, EventArgs e)
         {
             bpmTapButton.BackgroundColor = UIColor.FromRGB(192, 203, 208);
+        }
+
+        partial void ActionButtons(UIButton sender)
+        {
+            var action = sender.AccessibilityIdentifier;
+            Debug.WriteLine($"{action} tapped");
+            switch (action)
+            {
+                case "StartClick":
+                    //TODO: Start click track
+
+                    break;
+                case "StopClick":
+                    //TODO: Stop click track
+
+                    break;
+                case "StopAll":
+                    //TODO: Stop click
+
+                    //Stop all pads
+                    foreach (var padButton in _padButtons)
+                    {
+                        if (padButton.IsPlaying)
+                            padButton.Stop();
+                        else
+                            padButton.Reset();
+                    }
+
+                    //Reset table
+                    if (setlistTable.IndexPathForSelectedRow != null)
+                        setlistTable.DeselectRow(setlistTable.IndexPathForSelectedRow, true);
+                    break;
+                default:
+                    throw new NotSupportedException("This type of action isn't supported");
+            }
+        }
+
+        partial void VolumeChange(UISlider sender)
+        {
+            var value = sender.Value;
+            var slider = sender.AccessibilityIdentifier;
+            Debug.WriteLine($"{slider} slider changed: {value}");
+            switch(slider)
+            {
+                case "MasterVolume":
+                    //TODO: Update both * master
+                    AudioManager.Instance.MasterVolume = value;
+                    break;
+                case "ClickVolume":
+                    //TODO: Update click * master
+                    AudioManager.Instance.ClickVolume = value;
+                    break;
+                case "PadVolume":
+                    //TODO: Update pad * master
+                    AudioManager.Instance.PadVolume = value;
+                    break;
+                default:
+                    throw new NotSupportedException("This type of volume slider isn't supported");
+            }
         }
 
         void _popView_SetlistAdded(object sender, SetlistEventArgs e)

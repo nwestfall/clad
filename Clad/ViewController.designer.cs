@@ -37,9 +37,17 @@ namespace Clad
         [Action ("PadButton_Up:")]
         partial void PadButton_Up (Clad.PadButton sender);
 
+        [Action ("ActionButtons:")]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        partial void ActionButtons (UIKit.UIButton sender);
+
         [Action ("Settings_Action:")]
         [GeneratedCode ("iOS Designer", "1.0")]
         partial void Settings_Action (UIKit.UIBarButtonItem sender);
+
+        [Action ("VolumeChange:")]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        partial void VolumeChange (UIKit.UISlider sender);
 
         void ReleaseDesignerOutlets ()
         {
