@@ -7,12 +7,13 @@ using UIKit;
 using CoreGraphics;
 using Clad.Models;
 using Clad.Audio;
+using Clad.Helpers;
 
 namespace Clad
 {
-    public partial class ViewController : UIViewController, IUITableViewDelegate
+    public partial class ViewController : UIViewController, IUITableViewDelegate, IUIAlertViewDelegate
     {
-        private BPMModel _bpmModel = new BPMModel();
+        private BPMModel _bpmModel = new BPMModel(Settings.LastBPM);
 
         [Export(nameof(BPM))]
         public BPMModel BPM
@@ -39,6 +40,7 @@ namespace Clad
 
         AddPopupView _popView;
         UIViewController _addPopupController;
+        UITapGestureRecognizer _bpmLabelTap;
 
         protected ViewController(IntPtr handle) : base(handle)
         {
@@ -49,15 +51,21 @@ namespace Clad
         {
             base.ViewDidLoad();
             //Audio Manager
-            AudioManager.Initialize(AudioManager.PadSounds.Classic);
+            AudioManager.Initialize(AudioManager.PadSounds.Classic, Settings.MasterVolume, Settings.PadVolume, Settings.ClickVolume);
 
             //Setup Views
             SetupNavBar();
+            masterVolumeSlider.Value = Settings.MasterVolume;
+            clickVolumeSlider.Value = Settings.ClickVolume;
+            padVolumeSlider.Value = Settings.PadVolume;
 
             //Initialization logic
             bpmStepperControl.Value = BPM.CurrentBPM;
+            bpmLabel.AttributedText = BPM.GetBPMAttributedString(BPM.CurrentBPM);
             setlistTable.Source = _setlistSource;
             setlistTable.Delegate = this;
+            toggleClickButton.SetTitle("Start Click", UIControlState.Normal);
+            toggleClickButton.SetTitle("Stop Click", UIControlState.Selected);
 
             //Style
             bpmTapButton.SetTitleColor(UIColor.DarkGray, UIControlState.Normal);
@@ -68,16 +76,53 @@ namespace Clad
             bpmTapButton.TouchDown += BpmTapButton_TouchDown;
             bpmTapButton.TouchUpInside += BpmTapButton_TouchUpInside;
             bpmLabel.UserInteractionEnabled = true;
+            _bpmLabelTap = new UITapGestureRecognizer(() =>
+            {
+                Debug.WriteLine("BPM Label Tapped");
+                var bpmPrompt = UIAlertController.Create("Enter BPM", "", UIAlertControllerStyle.Alert);
+                bpmPrompt.Title = "Enter BPM";
+                bpmPrompt.AddAction(UIAlertAction.Create("Cancel", UIAlertActionStyle.Cancel, null));
+                bpmPrompt.AddAction(UIAlertAction.Create("Set", UIAlertActionStyle.Default, (action) =>
+                {
+                    Debug.WriteLine("BPM Set action");
+                    var textField = bpmPrompt.TextFields[0];
+                    if (string.IsNullOrEmpty(textField.Text))
+                        AlertMessage("Error changing BPM", "BPM field was left blank");
+                    if (int.TryParse(textField.Text, out int result))
+                    {
+                        if (result < 1 || result > 500)
+                            AlertMessage("Error changing BPM", "BPM must be between 0 and 501");
+                        else
+                        {
+                            BPM.CurrentBPM = result;
+                        }
+                    }
+                    else
+                        AlertMessage("Error changing BPM", "BPM must be a number");
+                }));
+                bpmPrompt.AddTextField((textField) =>
+                {
+                    textField.KeyboardType = UIKeyboardType.NumberPad;
+                    textField.KeyboardAppearance = UIKeyboardAppearance.Dark;
+                    textField.ShouldChangeCharacters = (UITextField field, NSRange range, string replace) =>
+                    {
+                        return int.TryParse(replace, out int result);
+                    };
+                });
+                PresentViewController(bpmPrompt, true, null);
+            });
+            bpmLabel.AddGestureRecognizer(_bpmLabelTap);
 
             //Observers
             _observablesToDispose.Add(BPM.AddObserver(nameof(BPMModel.CurrentBPM), NSKeyValueObservingOptions.New, (observed) =>
             {
                 int newValue = observed.NewValue.ToInt();
                 Debug.WriteLine($"{nameof(BPMModel.CurrentBPM)} changed: {newValue}");
-                bpmLabel.AttributedText = _bpmModel.GetBPMAttributedString(newValue);
+                bpmLabel.AttributedText = BPM.GetBPMAttributedString(newValue);
                 bpmStepperControl.Value = newValue;
             }));
         }
+
         public override void ViewDidUnload()
         {
             base.ViewDidUnload();
@@ -85,6 +130,9 @@ namespace Clad
             bpmStepperControl.ValueChanged -= BpmStepperControl_ValueChanged;
             bpmTapButton.TouchDown -= BpmTapButton_TouchDown;
             bpmTapButton.TouchUpInside -= BpmTapButton_TouchUpInside;
+            bpmLabel.RemoveGestureRecognizer(_bpmLabelTap);
+            _bpmLabelTap.Dispose();
+            _bpmLabelTap = null;
 
             //Observers
             foreach (var observable in _observablesToDispose)
@@ -215,6 +263,13 @@ namespace Clad
             }
         }
 
+        void AlertMessage(string title, string message)
+        {
+            UIAlertController alertController = UIAlertController.Create(title, message, UIAlertControllerStyle.Alert);
+            alertController.AddAction(UIAlertAction.Create("OK", UIAlertActionStyle.Default, null));
+            PresentViewController(alertController, true, null);
+        }
+
         #region Events
         void BpmTapButton_TouchDown(object sender, EventArgs e)
         {
@@ -270,13 +325,18 @@ namespace Clad
             Debug.WriteLine($"{action} tapped");
             switch (action)
             {
-                case "StartClick":
-                    //TODO: Start click track
-
-                    break;
-                case "StopClick":
-                    //TODO: Stop click track
-
+                case "ToggleClick":
+                    //TODO: Toggle click track
+                    if (sender.Selected)
+                    {
+                        //Stop
+                        sender.Selected = false;
+                    }
+                    else
+                    {
+                        //Start
+                        sender.Selected = true;
+                    }
                     break;
                 case "StopAll":
                     //TODO: Stop click
@@ -309,14 +369,17 @@ namespace Clad
                 case "MasterVolume":
                     //TODO: Update both * master
                     AudioManager.Instance.MasterVolume = value;
+                    Settings.MasterVolume = value;
                     break;
                 case "ClickVolume":
                     //TODO: Update click * master
                     AudioManager.Instance.ClickVolume = value;
+                    Settings.ClickVolume = value;
                     break;
                 case "PadVolume":
                     //TODO: Update pad * master
                     AudioManager.Instance.PadVolume = value;
+                    Settings.PadVolume = value;
                     break;
                 default:
                     throw new NotSupportedException("This type of volume slider isn't supported");

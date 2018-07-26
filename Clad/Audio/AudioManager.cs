@@ -110,7 +110,7 @@ namespace Clad.Audio
             }
         }
 
-        public static void Initialize(PadSounds padSound)
+        public static void Initialize(PadSounds padSound, float masterVolume = 0.85F, float padVolume = 0.85F, float clickVolume = 0.85F)
         {
             //TODO: Different sounds
             Instance = new AudioManager();

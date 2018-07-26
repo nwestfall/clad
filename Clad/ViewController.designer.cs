@@ -27,11 +27,27 @@ namespace Clad
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UISlider clickVolumeSlider { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UISlider masterVolumeSlider { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UINavigationBar navBar { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UISlider padVolumeSlider { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UITableView setlistTable { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIButton toggleClickButton { get; set; }
 
 
         [Action ("PadButton_Up:")]
@@ -66,14 +82,34 @@ namespace Clad
                 bpmTapButton = null;
             }
 
+            if (clickVolumeSlider != null) {
+                clickVolumeSlider.Dispose ();
+                clickVolumeSlider = null;
+            }
+
+            if (masterVolumeSlider != null) {
+                masterVolumeSlider.Dispose ();
+                masterVolumeSlider = null;
+            }
+
             if (navBar != null) {
                 navBar.Dispose ();
                 navBar = null;
             }
 
+            if (padVolumeSlider != null) {
+                padVolumeSlider.Dispose ();
+                padVolumeSlider = null;
+            }
+
             if (setlistTable != null) {
                 setlistTable.Dispose ();
                 setlistTable = null;
+            }
+
+            if (toggleClickButton != null) {
+                toggleClickButton.Dispose ();
+                toggleClickButton = null;
             }
         }
     }

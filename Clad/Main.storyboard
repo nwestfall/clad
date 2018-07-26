@@ -241,11 +241,11 @@
                                 <rect key="frame" x="0.0" y="216" width="421.5" height="552"/>
                                 <autoresizingMask key="autoresizingMask" heightSizable="YES" widthSizable="YES" flexibleMaxX="YES"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="gray" indentationWidth="10" id="11675" accessoryType="detailDisclosureButton" rowHeight="100" reuseIdentifier="TableCell">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="gray" indentationWidth="10" id="11675" rowHeight="100" reuseIdentifier="TableCell" accessoryType="disclosureIndicator">
                                         <rect key="frame" x="0.0" y="28" width="421.5" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="11675" id="11676">
-                                            <rect key="frame" x="0.0" y="0.0" width="354.5" height="99.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="388.5" height="99.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" colorSpace="calibratedRGB" red="0.38039215686274508" green="0.48627450980392156" blue="0.54117647058823526" alpha="1"/>
@@ -292,11 +292,11 @@
                                 </connections>
                                 <accessibility key="accessibilityConfiguration" label="Pad Volume" hint="Pad Volume" identifier="PadVolume"/>
                             </slider>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="11913">
-                                <rect key="frame" x="599" y="687" width="120" height="61"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="11914">
+                                <rect key="frame" x="739" y="687" width="120" height="61"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.75294117647058822" green="0.79607843137254897" blue="0.81176470588235294" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="tintColor" white="0.33333333333333298" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="tintColor" colorSpace="calibratedRGB" red="0.8666666666666667" green="0.27058823529411763" blue="0.23529411764705882" alpha="1"/>
                                 <state key="normal" title="Start Click">
                                     <color key="titleColor" white="0.33333333333333298" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -305,25 +305,7 @@
                                         <real key="value" value="10"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
-                                <accessibility key="accessibilityConfiguration" label="Start Click" hint="Start Click" identifier="StartClick"/>
-                                <connections>
-                                    <action selector="ActionButtons:" destination="277" id="12840" eventType="touchUpInside"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="11914">
-                                <rect key="frame" x="739" y="687" width="120" height="61"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.75294117647058822" green="0.79607843137254897" blue="0.81176470588235294" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="tintColor" white="0.33333333333333298" alpha="1" colorSpace="calibratedWhite"/>
-                                <state key="normal" title="Stop Click">
-                                    <color key="titleColor" white="0.33333333333333298" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <real key="value" value="10"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <accessibility key="accessibilityConfiguration" label="Stop Click" hint="Stop Click" identifier="StopClick"/>
+                                <accessibility key="accessibilityConfiguration" label="Toggle Click" hint="Toggle Click" identifier="ToggleClick"/>
                                 <connections>
                                     <action selector="ActionButtons:" destination="277" id="12839" eventType="touchUpInside"/>
                                 </connections>
@@ -370,6 +352,10 @@
                         <outletCollection property="_padButtons" destination="1514" id="YG6-6r-7Zx"/>
                         <outlet property="navBar" destination="1070" id="name-outlet-1070"/>
                         <outlet property="setlistTable" destination="11674" id="name-outlet-11674"/>
+                        <outlet property="masterVolumeSlider" destination="1711" id="name-outlet-1711"/>
+                        <outlet property="clickVolumeSlider" destination="11909" id="name-outlet-11909"/>
+                        <outlet property="padVolumeSlider" destination="11911" id="name-outlet-11911"/>
+                        <outlet property="toggleClickButton" destination="11914" id="name-outlet-11914"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="279" userLabel="First Responder" sceneMemberID="firstResponder"/>

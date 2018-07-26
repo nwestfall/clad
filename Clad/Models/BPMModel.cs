@@ -1,6 +1,7 @@
 ﻿using System;
 using Foundation;
 using UIKit;
+using Clad.Helpers;
 
 namespace Clad.Models
 {
@@ -20,6 +21,7 @@ namespace Clad.Models
             {
                 WillChangeValue(nameof(CurrentBPM));
                 _currentBpm = value;
+                Settings.LastBPM = value;
                 DidChangeValue(nameof(CurrentBPM));
             }
         }
@@ -64,8 +66,13 @@ namespace Clad.Models
             return attributedString;
         }
 
-        public BPMModel()
+        /// <summary>
+        /// Initializes a new instance of the <see cref="T:Clad.Models.BPMModel"/> class.
+        /// </summary>
+        /// <param name="bpm">Bpm.</param>
+        public BPMModel(int bpm = 125)
         {
+            _currentBpm = bpm;
         }
     }
 }
