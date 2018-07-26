@@ -37,7 +37,8 @@ namespace Clad.Audio
         {
             Unknown,
             Click,
-            Pad
+            Pad,
+            All
         }
 
         public static AudioManager Instance
@@ -48,7 +49,7 @@ namespace Clad.Audio
 
         private Dictionary<string, AVAudioPlayer> _audioPlayers = new Dictionary<string, AVAudioPlayer>();
 
-        private Dictionary<SoundType, AVAudioPlayer> _activePlayers = new Dictionary<SoundType, AVAudioPlayer>();
+        private (AVAudioPlayer pad, AVAudioPlayer click) _activePlayers = (null, null);
 
         private PadSounds _padSound;
 
@@ -74,11 +75,12 @@ namespace Clad.Audio
             {
                 WillChangeValue(nameof(MasterVolume));
                 _masterVolume = value;
+                UpdateVolume(SoundType.All);
                 DidChangeValue(nameof(MasterVolume));
             }
         }
 
-        private float _padVolume = 0.085F;
+        private float _padVolume = 0.85F;
 
         [Export(nameof(PadVolume))]
         public float PadVolume
@@ -88,11 +90,12 @@ namespace Clad.Audio
             {
                 WillChangeValue(nameof(PadVolume));
                 _padVolume = value;
+                UpdateVolume(SoundType.Pad);
                 DidChangeValue(nameof(PadVolume));
             }
         }
 
-        private float _clickVolume;
+        private float _clickVolume = 0.85F;
 
         [Export(nameof(ClickVolume))]
         public float ClickVolume
@@ -102,6 +105,7 @@ namespace Clad.Audio
             {
                 WillChangeValue(nameof(ClickVolume));
                 _clickVolume = value;
+                UpdateVolume(SoundType.Click);
                 DidChangeValue(nameof(ClickVolume));
             }
         }
@@ -126,22 +130,23 @@ namespace Clad.Audio
         public async Task PlayAsync(string key)
         {
             //Check if running first, then pause
-            if (_activePlayers.ContainsKey(SoundType.Pad))
+            if (_activePlayers.pad != null)
                 await StopAsync(SoundType.Pad);
 
             if(_audioPlayers.TryGetValue(key, out AVAudioPlayer player))
             {
-                player.Volume = MasterVolume;
+                player.Volume = MasterVolume * PadVolume;
                 player.Play();
-                _activePlayers.Add(SoundType.Pad, player);
+                _activePlayers.pad = player;
             }
         }
 
         public async Task StopAsync(SoundType soundType)
         {
-            if(_activePlayers.TryGetValue(SoundType.Pad, out AVAudioPlayer player))
+            if (soundType == SoundType.Pad && _activePlayers.pad != null)
             {
                 //Fade
+                var player = _activePlayers.pad;
                 await Task.Run(() =>
                 {
                     var currentVolume = player.Volume;
@@ -154,21 +159,29 @@ namespace Clad.Audio
                 player.Stop();
                 player.CurrentTime = 0;
                 player.PrepareToPlay();
-                _activePlayers.Remove(SoundType.Pad);
+                _activePlayers.pad = null;
             }
+            else
+                throw new NotSupportedException("Not supported yet");
+        }
+
+        private void UpdateVolume(SoundType soundType)
+        {
+            if (soundType == SoundType.Pad || soundType == SoundType.All)
+                _activePlayers.pad?.SetVolume((MasterVolume * PadVolume), 0);
+            if (soundType == SoundType.Click || soundType == SoundType.All)
+                _activePlayers.click?.SetVolume((MasterVolume * ClickVolume), 0);
         }
 
         protected override void Dispose(bool disposing)
         {
             if(disposing)
             {
-                foreach(var item in _activePlayers)
-                {
-                    item.Value.Stop();
-                    item.Value.Dispose();
-                }
-                _activePlayers.Clear();
-                _activePlayers = null;
+                _activePlayers.pad?.Stop();
+                _activePlayers.pad?.Dispose();
+                _activePlayers.click?.Stop();
+                _activePlayers.click?.Dispose();
+                _activePlayers = (null, null);
 
                 foreach(var item in _audioPlayers)
                     item.Value.Dispose();
