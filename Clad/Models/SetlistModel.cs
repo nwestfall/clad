@@ -1,6 +1,7 @@
 ﻿using System;
 
 using Foundation;
+using LiteDB;
 
 namespace Clad.Models
 {
@@ -45,6 +46,29 @@ namespace Clad.Models
                 DidChangeValue(nameof(Key));
             }
         }
+
+        private int _seq;
+
+        /// <summary>
+        /// Gets or sets the seq.
+        /// </summary>
+        /// <value>The seq.</value>
+        [Export(nameof(Seq))]
+        public int Seq
+        {
+            get => _seq;
+            set
+            {
+                WillChangeValue(nameof(Seq));
+                _seq = value;
+                DidChangeValue(nameof(Seq));
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="T:Clad.Models.SetlistModel"/> class.
+        /// </summary>
+        public SetlistModel() { }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="T:Clad.Models.SetlistModel"/> class.

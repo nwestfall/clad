@@ -89,6 +89,9 @@
     <Reference Include="Plugin.Settings">
       <HintPath>..\packages\Xam.Plugins.Settings.3.1.1\lib\Xamarin.iOS10\Plugin.Settings.dll</HintPath>
     </Reference>
+    <Reference Include="LiteDB">
+      <HintPath>..\packages\LiteDB.4.1.4\lib\netstandard2.0\LiteDB.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json" />
@@ -131,6 +134,7 @@
     <Compile Include="Audio\Metronome.cs" />
     <Compile Include="Audio\AudioGenerator.cs" />
     <Compile Include="Helpers\Settings.cs" />
+    <Compile Include="Helpers\LiteDbHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Sounds\Classic\C.m4a" />

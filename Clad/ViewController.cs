@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 using Foundation;
 using UIKit;
@@ -66,6 +67,7 @@ namespace Clad
             setlistTable.Delegate = this;
             toggleClickButton.SetTitle("Start Click", UIControlState.Normal);
             toggleClickButton.SetTitle("Stop Click", UIControlState.Selected);
+            _setlistSource.Items = LiteDbHelper.GetSetlists();
 
             //Style
             bpmTapButton.SetTitleColor(UIColor.DarkGray, UIControlState.Normal);
@@ -156,6 +158,8 @@ namespace Clad
                 _addPopupController?.Dispose();
                 _addPopupController = null;
             }
+            // Manage LiteDb
+            LiteDbHelper.LowMemory();
         }
 
         public override bool PrefersStatusBarHidden() => true;
@@ -389,6 +393,7 @@ namespace Clad
         void _popView_SetlistAdded(object sender, SetlistEventArgs e)
         {
             _setlistSource.Items.Add(e.Setlist);
+            LiteDbHelper.SaveCurrentSetlist(_setlistSource.Items);
             setlistTable.InsertRows(new NSIndexPath[] { NSIndexPath.Create(0, _setlistSource.Items.Count - 1) }, UITableViewRowAnimation.Automatic);
             _addPopupController.DismissViewController(true, () =>
             {
