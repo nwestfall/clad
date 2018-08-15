@@ -34,6 +34,10 @@ namespace Clad.Helpers
         private static readonly float ClickVolumeDefault = 0.85F;
         private const string LastBPMKey = "lastbpm_key";
         private static readonly int LastBPMDefault = 125;
+        private const string LastUpperKey = "lastupper_key";
+        private static readonly int LastUpperDefault = 4;
+        private const string LastLowerKey = "lastlower_key";
+        private static readonly int LastLowerDefault = 4;
 
 		#endregion
 
@@ -81,6 +85,28 @@ namespace Clad.Helpers
             }
         }
 
+        public static int LastUpper
+        {
+            get => AppSettings.GetValueOrDefault(LastUpperKey, LastUpperDefault);
+            set
+            {
+                AppSettings.AddOrUpdateValue(LastUpperKey, value);
+                KeyStore.SetLong(LastUpperKey, value);
+                KeyStore.Synchronize();
+            }
+        }
+
+        public static int LastLower
+        {
+            get => AppSettings.GetValueOrDefault(LastLowerKey, LastLowerDefault);
+            set
+            {
+                AppSettings.AddOrUpdateValue(LastLowerKey, value);
+                KeyStore.SetLong(LastLowerKey, value);
+                KeyStore.Synchronize();
+            }
+        }
+
         public static void SyncFromCloud()
         {
             var dictionary = KeyStore.ToDictionary();
@@ -92,6 +118,10 @@ namespace Clad.Helpers
                 AppSettings.AddOrUpdateValue(ClickVolumeKey, (float)KeyStore.GetDouble(ClickVolumeKey));
             if (dictionary.ContainsKey(new NSString(LastBPMKey)))
                 AppSettings.AddOrUpdateValue(LastBPMKey, (int)KeyStore.GetLong(LastBPMKey));
+            if (dictionary.ContainsKey(new NSString(LastUpperKey)))
+                AppSettings.AddOrUpdateValue(LastUpperKey, (int)KeyStore.GetLong(LastUpperKey));
+            if (dictionary.ContainsKey(new NSString(LastLowerKey)))
+                AppSettings.AddOrUpdateValue(LastLowerKey, (int)KeyStore.GetLong(LastLowerKey));
         }
 
         public static void SyncToCloud() => KeyStore.Synchronize();

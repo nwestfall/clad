@@ -30,7 +30,7 @@ namespace Clad.Helpers
             {
                 foreach (var item in setlists)
                 {
-                    file.WriteLine($"{item.Key},{item.BPM}");
+                    file.WriteLine($"{item.Key},{item.BPM},{item.Upper},{item.Lower}");
                 }
             }
 
@@ -50,13 +50,15 @@ namespace Clad.Helpers
             foreach(var line in fileContents)
             {
                 var split = line.Split(',');
-                if (split.Length < 2)
+                if (split.Length < 4)
                     continue; // Skip cause it's too small
 
                 setlist.Add(new SetlistModel()
                 {
                     Key = split[0],
-                    BPM = int.Parse(split[1])
+                    BPM = int.Parse(split[1]),
+                    Upper = int.Parse(split[2]),
+                    Lower = int.Parse(split[3])
                 });
             }
 

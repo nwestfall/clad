@@ -32,20 +32,20 @@ namespace Clad
             SetTitleColor(UIColor.DarkGray, UIControlState.Selected);
         }
 
-        public void Play()
+        public async void Play()
         {
             Debug.WriteLine($"Play Pad: {AccessibilityIdentifier}");
             IsPlaying = true;
             SetTitleColor(UIColor.DarkGray, UIControlState.Normal);
             BackgroundColor = UIColor.FromRGB(207, 216, 220);
-            AudioManager.Instance.PlayAsync(AccessibilityIdentifier);
+            await AudioManager.Instance.PlayAsync(AccessibilityIdentifier);
         }
 
-        public void Stop()
+        public async void Stop()
         {
             Debug.WriteLine($"Stop Pad: {AccessibilityIdentifier}");
             Reset();
-            AudioManager.Instance.StopAsync(AudioManager.SoundType.Pad);
+            await AudioManager.Instance.StopAsync(AudioManager.SoundType.Pad);
         }
 
         public void Reset()

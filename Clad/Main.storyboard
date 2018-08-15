@@ -246,14 +246,14 @@
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="28" sectionFooterHeight="28" id="11674" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES" springLoaded="YES">
-                                <rect key="frame" x="0.0" y="216" width="421.5" height="552"/>
+                                <rect key="frame" x="0.0" y="352" width="422" height="416"/>
                                 <autoresizingMask key="autoresizingMask" heightSizable="YES" widthSizable="YES" flexibleMaxX="YES"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="gray" indentationWidth="10" id="11675" rowHeight="100" reuseIdentifier="TableCell" accessoryType="disclosureIndicator">
-                                        <rect key="frame" x="0.0" y="28" width="421.5" height="100"/>
+                                        <rect key="frame" x="0.0" y="28" width="422" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="11675" id="11676">
-                                            <rect key="frame" x="0.0" y="0.0" width="388.5" height="99.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="389" height="99.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" colorSpace="calibratedRGB" red="0.38039215686274508" green="0.48627450980392156" blue="0.54117647058823526" alpha="1"/>
@@ -336,6 +336,44 @@
                                     <action selector="ActionButtons:" destination="277" id="12838" eventType="touchUpInside"/>
                                 </connections>
                             </button>
+                            <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="16" translatesAutoresizingMaskIntoConstraints="NO" id="13328" minimumValue="1" value="4">
+                                <rect key="frame" x="284" y="202" width="94" height="29"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
+                            </stepper>
+                            <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="16" translatesAutoresizingMaskIntoConstraints="NO" id="13329" minimumValue="1" value="4">
+                                <rect key="frame" x="284" y="272" width="94" height="29"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
+                            </stepper>
+                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="13331">
+                                <rect key="frame" x="42" y="186" width="114" height="62"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="4">
+                                        <attributes>
+                                            <color key="NSColor" colorSpace="calibratedRGB" red="0.75294117647058822" green="0.796078431372549" blue="0.81568627450980391" alpha="1"/>
+                                            <font key="NSFont" name="HelveticaNeue" family="Helvetica Neue" size="42"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                            </label>
+                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="13332">
+                                <rect key="frame" x="42" y="256" width="114" height="62"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="4">
+                                        <attributes>
+                                            <color key="NSColor" colorSpace="calibratedRGB" red="0.75294117647058822" green="0.796078431372549" blue="0.81568627450980391" alpha="1"/>
+                                            <font key="NSFont" name="HelveticaNeue" family="Helvetica Neue" size="42"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.098039215686274508" green="0.12549019607843137" blue="0.13725490196078433" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
@@ -364,6 +402,10 @@
                         <outlet property="clickVolumeSlider" destination="11909" id="name-outlet-11909"/>
                         <outlet property="padVolumeSlider" destination="11911" id="name-outlet-11911"/>
                         <outlet property="toggleClickButton" destination="11914" id="name-outlet-11914"/>
+                        <outlet property="upperLabel" destination="13331" id="name-outlet-13331"/>
+                        <outlet property="lowerLabel" destination="13332" id="name-outlet-13332"/>
+                        <outlet property="upperStepperControl" destination="13328" id="name-outlet-13328"/>
+                        <outlet property="lowerStepperControl" destination="13329" id="name-outlet-13329"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="279" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -5,6 +5,7 @@ using System.Threading;
 
 using Foundation;
 using AVFoundation;
+using Clad.Models;
 
 namespace Clad.Audio
 {
@@ -51,7 +52,7 @@ namespace Clad.Audio
 
         private Dictionary<string, AVAudioPlayer> _audioPlayers = new Dictionary<string, AVAudioPlayer>();
 
-        private (AVAudioPlayer pad, AVAudioPlayer click) _activePlayers = (null, null);
+        private (AVAudioPlayer pad, Metronome click) _activePlayers = (null, null);
 
         private PadSounds _padSound;
 
@@ -145,9 +146,32 @@ namespace Clad.Audio
             }
         }
 
+        public Task PlayAsync(ref BPMModel model)
+        {
+            //If already running, just restart with new model
+            if(_activePlayers.click != null)
+            {
+                _activePlayers.click.Restart(ref model);
+                return Task.FromResult(0);
+            }
+
+            _volumeLock.Wait();
+            _activePlayers.click = new Metronome((MasterVolume * ClickVolume), ref model);
+            _volumeLock.Release();
+            _activePlayers.click.Start();
+
+            return Task.FromResult(0);
+        }
+
         public async Task StopAsync(SoundType soundType)
         {
-            if (soundType == SoundType.Pad && _activePlayers.pad != null)
+            if ((soundType == SoundType.All || soundType == SoundType.Click) && _activePlayers.click != null)
+            {
+                _activePlayers.click?.Dispose();
+                _activePlayers.click = null;
+            }
+
+            if ((soundType == SoundType.All || soundType == SoundType.Pad) && _activePlayers.pad != null)
             {
                 //Fade
                 var player = _activePlayers.pad;
@@ -167,8 +191,6 @@ namespace Clad.Audio
                 player.PrepareToPlay();
                 _activePlayers.pad = null;
             }
-            else
-                throw new NotSupportedException("Not supported yet");
         }
 
         private void UpdateVolume(SoundType soundType)
@@ -179,7 +201,7 @@ namespace Clad.Audio
                 if (soundType == SoundType.Pad || soundType == SoundType.All)
                     _activePlayers.pad?.SetVolume((MasterVolume * PadVolume), 0);
                 if (soundType == SoundType.Click || soundType == SoundType.All)
-                    _activePlayers.click?.SetVolume((MasterVolume * ClickVolume), 0);
+                    _activePlayers.click?.SetVolume((MasterVolume * ClickVolume));
                 _volumeLock.Release();
             });
         }

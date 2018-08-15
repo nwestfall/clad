@@ -37,6 +37,8 @@ namespace Clad.Helpers
                         setlistDocs.Add(new BsonDocument(new Dictionary<string, BsonValue>()
                         {
                             { "BPM", setlists[i].BPM },
+                            { "Upper", setlists[i].Upper },
+                            { "Lower", setlists[i].Lower },
                             { "Key", setlists[i].Key },
                             { "Seq", setlists[i].Seq }
                         }));

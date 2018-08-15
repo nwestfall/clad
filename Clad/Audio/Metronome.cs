@@ -1,111 +1,152 @@
 ﻿/*
- * Ported from https://github.com/MasterEx/BeatKeeper/blob/master/src/pntanasis/android/metronome/Metronome.java
+ * Ported/Recreated from https://github.com/dvinesett/Ronome/blob/master/Ronome/ViewController.swift
  * 
  * 07/24/2018
  * */
 
 using System;
 
+using Clad.Models;
+using Foundation;
+using AVFoundation;
+
 namespace Clad.Audio
 {
     /// <summary>
     /// Metronome.
     /// </summary>
-    public class Metronome
+    public class Metronome : NSObject
     {
-        const int TICK = 1000;
+        AVAudioPlayer _soundPlayer;
+        AVAudioPlayer _accentPlayer;
+        NSTimer _metronomeTimer;
+        volatile int _count = 0;
 
-        /// <summary>
-        /// Gets or sets the bpm.
-        /// </summary>
-        /// <value>The bpm.</value>
-        public double BPM { get; set; }
-        /// <summary>
-        /// Gets or sets the beat.
-        /// </summary>
-        /// <value>The beat.</value>
-        public int Beat { get; set; }
-        /// <summary>
-        /// Gets or sets the note value.
-        /// </summary>
-        /// <value>The note value.</value>
-        public int NoteValue { get; set; }
-        /// <summary>
-        /// Gets or sets the beat sound.
-        /// </summary>
-        /// <value>The beat sound.</value>
-        public double BeatSound { get; set; }
-        /// <summary>
-        /// Gets or sets the sound.
-        /// </summary>
-        /// <value>The sound.</value>
-        public double Sound { get; set; }
+        volatile static bool _isRunning = false;
 
-        int _silence;
-        bool _play = true;
+        BPMModel _model;
 
-        AudioGenerator _audioGenerator = new AudioGenerator(8000);
-        double[] _soundTickArray;
-        double[] _soundTockArray;
-        double[] _soundSilenceArray;
-        int _currentBeat = 1;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="T:Clad.Audio.Metronome"/> class.
-        /// </summary>
-        public Metronome()
+        public Metronome(float volume, ref BPMModel model)
         {
-            _audioGenerator.CreatePlayer();
+            SetModel(ref model);
+
+            var soundFile = new NSUrl($"Sounds/DefaultClick/sound.wav");
+            var accentFile = new NSUrl($"Sounds/DefaultClick/accent.wav");
+
+            NSError error;
+            _soundPlayer = new AVAudioPlayer(soundFile, "sound", out error);
+            _soundPlayer.Volume = volume;
+            _soundPlayer.Pan = -1;
+            _soundPlayer.PrepareToPlay();
+            _accentPlayer = new AVAudioPlayer(accentFile, "sound", out error);
+            _accentPlayer.Volume = volume;
+            _accentPlayer.Pan = -1;
+            _accentPlayer.PrepareToPlay();
+            // TODO: Check error
         }
 
-        /// <summary>
-        /// Calculates the silence.
-        /// </summary>
-        public void CalculateSilence()
+        public void Start()
         {
-            _silence = (int)(((60 / BPM) * 8000) - TICK);
-            _soundTickArray = new double[TICK];
-            _soundTockArray = new double[TICK];
-            _soundSilenceArray = new double[_silence];
-
-            double[] tick = _audioGenerator.GetSineWave(TICK, 8000, BeatSound);
-            double[] tock = _audioGenerator.GetSineWave(TICK, 8000, Sound);
-            for (var i = 0; i < TICK; i++)
-            {
-                //TODO: Span or array copy
-                _soundTickArray[i] = tick[i];
-                _soundTockArray[i] = tock[i];
-            }
-            for (var i = 0; i < _silence; i++)
-                _soundSilenceArray[i] = 0;
+            _isRunning = true;
+            var metronomeTimeInterval = (240.0 / (double)_model.Lower) / _model.CurrentBPM;
+            _metronomeTimer = NSTimer.CreateScheduledTimer(metronomeTimeInterval, true, PlaySound);
+            _metronomeTimer?.Fire();
         }
 
-        /// <summary>
-        /// Play this instance.
-        /// </summary>
-        public void Play()
-        {
-            CalculateSilence();
-            do
-            {
-                if (_currentBeat == 1)
-                    _audioGenerator.WriteSound(_soundTockArray);
-                else
-                    _audioGenerator.WriteSound(_soundTickArray);
-                _audioGenerator.WriteSound(_soundSilenceArray);
-                _currentBeat++;
-                if (_currentBeat > Beat)
-                    _currentBeat = 1;
-            } while (_play);
-        }
-
-        /// <summary>
-        /// Stop this instance.
-        /// </summary>
         public void Stop()
         {
-            _play = false;
-            _audioGenerator?.Dispose();
+            _metronomeTimer?.Invalidate();
+            _metronomeTimer?.Dispose();
+            _metronomeTimer = null;
+            _count = 0;
+            _isRunning = false;
         }
+
+        public void Restart()
+        {
+            if(_isRunning)
+            {
+                Stop();
+                Start();
+            }
+        }
+
+        public void Restart(ref BPMModel model)
+        {
+            SetModel(ref model);
+            if (_isRunning)
+            {
+                Stop();
+                Start();
+            }
+        }
+
+        private void Restart(NSObservedChange change)
+        {
+            if (_isRunning)
+            {
+                Stop();
+                Start();
+            }
+        }
+
+        public void SetVolume(float volume)
+        {
+            _soundPlayer.Volume = volume;
+            _accentPlayer.Volume = volume;
+        }
+
+        private void SetModel(ref BPMModel model)
+        {
+            _model?.RemoveObserver(this, nameof(BPMModel.CurrentBPM));
+            _model?.RemoveObserver(this, nameof(BPMModel.Upper));
+            _model?.RemoveObserver(this, nameof(BPMModel.Lower));
+            _model = model;
+            _model?.AddObserver(this, nameof(BPMModel.CurrentBPM), NSKeyValueObservingOptions.New, IntPtr.Zero);
+            _model?.AddObserver(this, nameof(BPMModel.Upper), NSKeyValueObservingOptions.New, IntPtr.Zero);
+            _model?.AddObserver(this, nameof(BPMModel.Lower), NSKeyValueObservingOptions.New, IntPtr.Zero);
+        }
+
+        private void PlaySound(NSTimer timer)
+        {
+            _count++;
+            if (_count == 1)
+                _accentPlayer.Play();
+            else
+            {
+                _soundPlayer.Play();
+                if(_count == _model.Upper) {
+                    _count = 0;
+                }
+            }
+        }
+
+        public override void ObserveValue(NSString keyPath, NSObject ofObject, NSDictionary change, IntPtr context)
+        {
+            if (ofObject.GetType().Name == nameof(BPMModel))
+                Restart();
+            else
+                base.ObserveValue(keyPath, ofObject, change, context);
+        }
+
+        #region IDisposable Support
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                Stop();
+                _soundPlayer?.Dispose();
+                _soundPlayer = null;
+                _accentPlayer?.Dispose();
+                _accentPlayer = null;
+                _model?.RemoveObserver(this, nameof(BPMModel.CurrentBPM));
+                _model?.RemoveObserver(this, nameof(BPMModel.Upper));
+                _model?.RemoveObserver(this, nameof(BPMModel.Lower));
+                _model = null;
+            }
+
+            base.Dispose(disposing);
+        }
+        #endregion
     }
 }

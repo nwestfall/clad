@@ -31,6 +31,14 @@ namespace Clad
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UILabel lowerLabel { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIStepper lowerStepperControl { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UISlider masterVolumeSlider { get; set; }
 
         [Outlet]
@@ -48,6 +56,14 @@ namespace Clad
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UIButton toggleClickButton { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UILabel upperLabel { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIStepper upperStepperControl { get; set; }
 
 
         [Action ("PadButton_Up:")]
@@ -91,6 +107,16 @@ namespace Clad
                 clickVolumeSlider = null;
             }
 
+            if (lowerLabel != null) {
+                lowerLabel.Dispose ();
+                lowerLabel = null;
+            }
+
+            if (lowerStepperControl != null) {
+                lowerStepperControl.Dispose ();
+                lowerStepperControl = null;
+            }
+
             if (masterVolumeSlider != null) {
                 masterVolumeSlider.Dispose ();
                 masterVolumeSlider = null;
@@ -114,6 +140,16 @@ namespace Clad
             if (toggleClickButton != null) {
                 toggleClickButton.Dispose ();
                 toggleClickButton = null;
+            }
+
+            if (upperLabel != null) {
+                upperLabel.Dispose ();
+                upperLabel = null;
+            }
+
+            if (upperStepperControl != null) {
+                upperStepperControl.Dispose ();
+                upperStepperControl = null;
             }
         }
     }

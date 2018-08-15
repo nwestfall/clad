@@ -29,6 +29,42 @@ namespace Clad.Models
             }
         }
 
+        private int _upper;
+
+        /// <summary>
+        /// Gets or sets the upper.
+        /// </summary>
+        /// <value>The upper.</value>
+        [Export(nameof(Upper))]
+        public int Upper
+        {
+            get => _upper;
+            set
+            {
+                WillChangeValue(nameof(Upper));
+                _upper = value;
+                DidChangeValue(nameof(Upper));
+            }
+        }
+
+        private int _lower;
+
+        /// <summary>
+        /// Gets or sets the lower.
+        /// </summary>
+        /// <value>The lower.</value>
+        [Export(nameof(Lower))]
+        public int Lower
+        {
+            get => _lower;
+            set
+            {
+                WillChangeValue(nameof(Lower));
+                _lower = value;
+                DidChangeValue(nameof(Lower));
+            }
+        }
+
         private string _key;
 
         /// <summary>
@@ -74,10 +110,14 @@ namespace Clad.Models
         /// Initializes a new instance of the <see cref="T:Clad.Models.SetlistModel"/> class.
         /// </summary>
         /// <param name="bpm">Bpm.</param>
+        /// <param name="upper">Upper.</param>
+        /// <param name="lower">Lower.</param>
         /// <param name="key">Key.</param>
-        public SetlistModel(int bpm, string key)
+        public SetlistModel(int bpm, int upper, int lower, string key)
         {
             BPM = bpm;
+            Upper = upper;
+            Lower = lower;
             Key = key;
         }
     }

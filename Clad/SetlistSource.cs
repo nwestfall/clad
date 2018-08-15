@@ -147,7 +147,7 @@ namespace Clad
             UITableViewCell cell = tableView.DequeueReusableCell(_cellIdentifier);
             var item = Items[indexPath.Row];
 
-            cell.TextLabel.Text = $"{item.Key} - {item.BPM}";
+            cell.TextLabel.Text = $"{item.Key} - {item.BPM} ({item.Upper} / {item.Lower})";
             cell.TextLabel.MinimumFontSize = 24;
             cell.AccessibilityHint = $"{item.Key} at {item.BPM}";
             cell.AccessibilityLabel = $"{item.Key} at {item.BPM}";

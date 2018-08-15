@@ -14,7 +14,7 @@ namespace Clad
 {
     public partial class ViewController : UIViewController, IUITableViewDelegate, IUIAlertViewDelegate
     {
-        private BPMModel _bpmModel = new BPMModel(Settings.LastBPM);
+        private BPMModel _bpmModel = new BPMModel(Settings.LastBPM, Settings.LastUpper, Settings.LastLower);
 
         [Export(nameof(BPM))]
         public BPMModel BPM
@@ -66,6 +66,10 @@ namespace Clad
             //Initialization logic
             bpmStepperControl.Value = BPM.CurrentBPM;
             bpmLabel.AttributedText = BPM.GetBPMAttributedString(BPM.CurrentBPM);
+            upperStepperControl.Value = BPM.Upper;
+            upperLabel.Text = BPM.Upper.ToString();
+            lowerStepperControl.Value = BPM.Lower;
+            lowerLabel.Text = BPM.Lower.ToString();
             setlistTable.Source = _setlistSource;
             setlistTable.Delegate = this;
             toggleClickButton.SetTitle("Start Click", UIControlState.Normal);
@@ -78,6 +82,8 @@ namespace Clad
 
             //Event Handles
             bpmStepperControl.ValueChanged += BpmStepperControl_ValueChanged;
+            upperStepperControl.ValueChanged += UpperStepperControl_ValueChanged;
+            lowerStepperControl.ValueChanged += LowerStepperControl_ValueChanged;
             bpmTapButton.TouchDown += BpmTapButton_TouchDown;
             bpmTapButton.TouchUpInside += BpmTapButton_TouchUpInside;
             bpmLabel.UserInteractionEnabled = true;
@@ -126,6 +132,20 @@ namespace Clad
                 bpmLabel.AttributedText = BPM.GetBPMAttributedString(newValue);
                 bpmStepperControl.Value = newValue;
             }));
+            _observablesToDispose.Add(BPM.AddObserver(nameof(BPMModel.Upper), NSKeyValueObservingOptions.New, (observed) =>
+            {
+                int newValue = observed.NewValue.ToInt();
+                Debug.WriteLine($"{nameof(BPMModel.Upper)} changed: {newValue}");
+                upperLabel.Text = newValue.ToString();
+                upperStepperControl.Value = newValue;
+            }));
+            _observablesToDispose.Add(BPM.AddObserver(nameof(BPMModel.Lower), NSKeyValueObservingOptions.New, (observed) =>
+            {
+                int newValue = observed.NewValue.ToInt();
+                Debug.WriteLine($"{nameof(BPMModel.Lower)} changed: {newValue}");
+                lowerLabel.Text = newValue.ToString();
+                lowerStepperControl.Value = newValue;
+            }));
         }
 
         public override void ViewDidUnload()
@@ -133,6 +153,8 @@ namespace Clad
             base.ViewDidUnload();
             //Event Handlers
             bpmStepperControl.ValueChanged -= BpmStepperControl_ValueChanged;
+            upperStepperControl.ValueChanged -= UpperStepperControl_ValueChanged;
+            lowerStepperControl.ValueChanged -= LowerStepperControl_ValueChanged;
             bpmTapButton.TouchDown -= BpmTapButton_TouchDown;
             bpmTapButton.TouchUpInside -= BpmTapButton_TouchUpInside;
             bpmLabel.RemoveGestureRecognizer(_bpmLabelTap);
@@ -251,11 +273,13 @@ namespace Clad
         }
 
         [Export("tableView:didSelectRowAtIndexPath:")]
-        public void RowSelected(UITableView tableView, NSIndexPath indexPath)
+        public async void RowSelected(UITableView tableView, NSIndexPath indexPath)
         {
             Debug.WriteLine($"Setlist Row Selected: {indexPath.Row}");
             var setlist = _setlistSource.Items[indexPath.Row];
             BPM.CurrentBPM = setlist.BPM;
+            BPM.Upper = setlist.Upper;
+            BPM.Lower = setlist.Lower;
 
             //Manage Pad Button
             foreach (var padButton in _padButtons)
@@ -271,6 +295,10 @@ namespace Clad
                 else
                     padButton.Reset();
             }
+
+            //Manage click
+            await AudioManager.Instance.PlayAsync(ref _bpmModel);
+            toggleClickButton.Selected = true;
         }
 
         void AlertMessage(string title, string message)
@@ -308,6 +336,26 @@ namespace Clad
             UIStepper stepper = (UIStepper)sender;
             Debug.WriteLine($"BPM Stepper Change: {stepper.Value}");
             BPM.CurrentBPM = (int)stepper.Value;
+
+            if (setlistTable.IndexPathForSelectedRow != null)
+                setlistTable.DeselectRow(setlistTable.IndexPathForSelectedRow, true);
+        }
+
+        void UpperStepperControl_ValueChanged(object sender, EventArgs e)
+        {
+            UIStepper stepper = (UIStepper)sender;
+            Debug.WriteLine($"Upper Stepper Change: {stepper.Value}");
+            BPM.Upper = (int)stepper.Value;
+
+            if (setlistTable.IndexPathForSelectedRow != null)
+                setlistTable.DeselectRow(setlistTable.IndexPathForSelectedRow, true);
+        }
+
+        void LowerStepperControl_ValueChanged(object sender, EventArgs e)
+        {
+            UIStepper stepper = (UIStepper)sender;
+            Debug.WriteLine($"Lower Stepper Change: {stepper.Value}");
+            BPM.Lower = (int)stepper.Value;
 
             if (setlistTable.IndexPathForSelectedRow != null)
                 setlistTable.DeselectRow(setlistTable.IndexPathForSelectedRow, true);
@@ -368,35 +416,34 @@ namespace Clad
             bpmTapButton.BackgroundColor = UIColor.FromRGB(192, 203, 208);
         }
 
-        partial void ActionButtons(UIButton sender)
+        async partial void ActionButtons(UIButton sender)
         {
             var action = sender.AccessibilityIdentifier;
             Debug.WriteLine($"{action} tapped");
             switch (action)
             {
                 case "ToggleClick":
-                    //TODO: Toggle click track
                     if (sender.Selected)
                     {
                         //Stop
+                        await AudioManager.Instance.StopAsync(AudioManager.SoundType.Click);
                         sender.Selected = false;
                     }
                     else
                     {
                         //Start
+                        await AudioManager.Instance.PlayAsync(ref _bpmModel);
                         sender.Selected = true;
                     }
                     break;
                 case "StopAll":
-                    //TODO: Stop click
+                    await AudioManager.Instance.StopAsync(AudioManager.SoundType.All);
+                    toggleClickButton.Selected = false; //Click button
 
                     //Stop all pads
                     foreach (var padButton in _padButtons)
                     {
-                        if (padButton.IsPlaying)
-                            padButton.Stop();
-                        else
-                            padButton.Reset();
+                        padButton.Reset();
                     }
 
                     //Reset table

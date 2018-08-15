@@ -41,6 +41,34 @@ namespace Clad.Models
             }
         }
 
+        private int _upper = 4;
+
+        [Export(nameof(Upper))]
+        public int Upper
+        {
+            get => _upper;
+            set
+            {
+                WillChangeValue(nameof(Upper));
+                _upper = value;
+                DidChangeValue(nameof(Upper));
+            }
+        }
+
+        private int _lower = 4;
+
+        [Export(nameof(Lower))]
+        public int Lower
+        {
+            get => _lower;
+            set
+            {
+                WillChangeValue(nameof(Lower));
+                _lower = value;
+                DidChangeValue(nameof(Lower));
+            }
+        }
+
         private void CalculateBPMFromTaps()
         {
             var now = DateTime.UtcNow.Ticks;
@@ -70,9 +98,11 @@ namespace Clad.Models
         /// Initializes a new instance of the <see cref="T:Clad.Models.BPMModel"/> class.
         /// </summary>
         /// <param name="bpm">Bpm.</param>
-        public BPMModel(int bpm = 125)
+        public BPMModel(int bpm = 125, int upper = 4, int lower = 4)
         {
             _currentBpm = bpm;
+            _upper = upper;
+            _lower = lower;
         }
     }
 }

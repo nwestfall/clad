@@ -20,9 +20,9 @@ namespace Clad
         /// </summary>
         /// <param name="bpm">Bpm.</param>
         /// <param name="key">Key.</param>
-        public SetlistEventArgs(int bpm,string key)
+        public SetlistEventArgs(int bpm, int upper, int lower, string key)
         {
-            Setlist = new SetlistModel(bpm, key);
+            Setlist = new SetlistModel(bpm, upper, lower, key);
         }
     }
 }
