@@ -47,6 +47,8 @@ namespace Clad.Audio
             private set;
         }
 
+        private readonly SemaphoreSlim _volumeLock = new SemaphoreSlim(1, 1);
+
         private Dictionary<string, AVAudioPlayer> _audioPlayers = new Dictionary<string, AVAudioPlayer>();
 
         private (AVAudioPlayer pad, AVAudioPlayer click) _activePlayers = (null, null);
@@ -135,7 +137,9 @@ namespace Clad.Audio
 
             if(_audioPlayers.TryGetValue(key, out AVAudioPlayer player))
             {
+                await _volumeLock.WaitAsync();
                 player.Volume = MasterVolume * PadVolume;
+                _volumeLock.Release();
                 player.Play();
                 _activePlayers.pad = player;
             }
@@ -149,6 +153,7 @@ namespace Clad.Audio
                 var player = _activePlayers.pad;
                 await Task.Run(() =>
                 {
+                    _volumeLock.Wait();
                     var currentVolume = player.Volume;
                     for (var i = currentVolume; i >= 0; i = i - 0.05F)
                     {
@@ -157,6 +162,7 @@ namespace Clad.Audio
                     }
                 });
                 player.Stop();
+                _volumeLock.Release();
                 player.CurrentTime = 0;
                 player.PrepareToPlay();
                 _activePlayers.pad = null;
@@ -167,10 +173,15 @@ namespace Clad.Audio
 
         private void UpdateVolume(SoundType soundType)
         {
-            if (soundType == SoundType.Pad || soundType == SoundType.All)
-                _activePlayers.pad?.SetVolume((MasterVolume * PadVolume), 0);
-            if (soundType == SoundType.Click || soundType == SoundType.All)
-                _activePlayers.click?.SetVolume((MasterVolume * ClickVolume), 0);
+            Task.Run(async () =>
+            {
+                await _volumeLock.WaitAsync();
+                if (soundType == SoundType.Pad || soundType == SoundType.All)
+                    _activePlayers.pad?.SetVolume((MasterVolume * PadVolume), 0);
+                if (soundType == SoundType.Click || soundType == SoundType.All)
+                    _activePlayers.click?.SetVolume((MasterVolume * ClickVolume), 0);
+                _volumeLock.Release();
+            });
         }
 
         protected override void Dispose(bool disposing)
