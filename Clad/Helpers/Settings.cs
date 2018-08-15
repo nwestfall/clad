@@ -1,6 +1,8 @@
 using Plugin.Settings;
 using Plugin.Settings.Abstractions;
 
+using Foundation;
+
 namespace Clad.Helpers
 {
 	/// <summary>
@@ -12,11 +14,15 @@ namespace Clad.Helpers
 	{
 		private static ISettings AppSettings
 		{
-			get
-			{
-				return CrossSettings.Current;
-			}
+			get => CrossSettings.Current;
 		}
+
+        private static NSUbiquitousKeyValueStore _keyStore = new NSUbiquitousKeyValueStore();
+
+        public static NSUbiquitousKeyValueStore KeyStore
+        {
+            get => _keyStore;
+        }
 
 		#region Setting Constants
 
@@ -34,25 +40,60 @@ namespace Clad.Helpers
         public static float MasterVolume
         {
             get => AppSettings.GetValueOrDefault(MasterVolumeKey, MasterVolumeDefault);
-            set => AppSettings.AddOrUpdateValue(MasterVolumeKey, value);
+            set
+            {
+                AppSettings.AddOrUpdateValue(MasterVolumeKey, value);
+                KeyStore.SetDouble(MasterVolumeKey, value);
+                KeyStore.Synchronize();
+            }
         }
 
         public static float PadVolume
         {
             get => AppSettings.GetValueOrDefault(PadVolumeKey, PadVolumeDefault);
-            set => AppSettings.AddOrUpdateValue(PadVolumeKey, value);
+            set
+            {
+                AppSettings.AddOrUpdateValue(PadVolumeKey, value);
+                KeyStore.SetDouble(PadVolumeKey, value);
+                KeyStore.Synchronize();
+            }
         }
 
         public static float ClickVolume
         {
             get => AppSettings.GetValueOrDefault(ClickVolumeKey, ClickVolumeDefault);
-            set => AppSettings.AddOrUpdateValue(ClickVolumeKey, value);
+            set
+            {
+                AppSettings.AddOrUpdateValue(ClickVolumeKey, value);
+                KeyStore.SetDouble(ClickVolumeKey, value);
+                KeyStore.Synchronize();
+            }
         }
 
         public static int LastBPM
         {
             get => AppSettings.GetValueOrDefault(LastBPMKey, LastBPMDefault);
-            set => AppSettings.AddOrUpdateValue(LastBPMKey, value);
+            set
+            {
+                AppSettings.AddOrUpdateValue(LastBPMKey, value);
+                KeyStore.SetLong(LastBPMKey, value);
+                KeyStore.Synchronize();
+            }
         }
+
+        public static void SyncFromCloud()
+        {
+            var dictionary = KeyStore.ToDictionary();
+            if (dictionary.ContainsKey(new NSString(MasterVolumeKey)))
+                AppSettings.AddOrUpdateValue(MasterVolumeKey, (float)KeyStore.GetDouble(MasterVolumeKey));
+            if (dictionary.ContainsKey(new NSString(PadVolumeKey)))
+                AppSettings.AddOrUpdateValue(PadVolumeKey, (float)KeyStore.GetDouble(PadVolumeKey));
+            if (dictionary.ContainsKey(new NSString(ClickVolumeKey)))
+                AppSettings.AddOrUpdateValue(ClickVolumeKey, (float)KeyStore.GetDouble(ClickVolumeKey));
+            if (dictionary.ContainsKey(new NSString(LastBPMKey)))
+                AppSettings.AddOrUpdateValue(LastBPMKey, (int)KeyStore.GetLong(LastBPMKey));
+        }
+
+        public static void SyncToCloud() => KeyStore.Synchronize();
 	}
 }

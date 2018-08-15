@@ -54,6 +54,9 @@ namespace Clad
             //Audio Manager
             AudioManager.Initialize(AudioManager.PadSounds.Classic, Settings.MasterVolume, Settings.PadVolume, Settings.ClickVolume);
 
+            //ICloud
+            Settings.SyncFromCloud();
+
             //Setup Views
             SetupNavBar();
             masterVolumeSlider.Value = Settings.MasterVolume;
@@ -141,6 +144,9 @@ namespace Clad
                 observable?.Dispose();
             _observablesToDispose.Clear();
             _observablesToDispose = new List<IDisposable>();
+
+            //ICloud
+            Settings.SyncToCloud();
         }
 
         public override void DidReceiveMemoryWarning()
@@ -274,6 +280,22 @@ namespace Clad
             PresentViewController(alertController, true, null);
         }
 
+        Task<string> PromptMessage(string title, string message, string action, string placeholder = "")
+        {
+            TaskCompletionSource<string> taskCompletionSource = new TaskCompletionSource<string>();
+            UIAlertController alertController = UIAlertController.Create(title, message, UIAlertControllerStyle.Alert);
+            alertController.AddTextField((obj) =>
+            {
+                obj.Placeholder = placeholder;
+            });
+            alertController.AddAction(UIAlertAction.Create(action, UIAlertActionStyle.Default, (ui) => {
+                var textField = alertController.TextFields[0];
+                taskCompletionSource.TrySetResult(textField.Text);
+            }));
+            PresentViewController(alertController, true, null);
+            return taskCompletionSource.Task;
+        }
+
         #region Events
         void BpmTapButton_TouchDown(object sender, EventArgs e)
         {
@@ -289,6 +311,29 @@ namespace Clad
 
             if (setlistTable.IndexPathForSelectedRow != null)
                 setlistTable.DeselectRow(setlistTable.IndexPathForSelectedRow, true);
+        }
+
+        async partial void Share_Action(UIBarButtonItem sender)
+        {
+            Debug.WriteLine("Share Action");
+            if (_setlistSource.Items.Count == 0)
+                AlertMessage("Unable to share setlist", "You must add at least 1 item to your setlist before you can share it with someone");
+            else
+            {
+                Debug.WriteLine($"Sharing ${_setlistSource.Items.Count} items from your setlist");
+                Debug.WriteLine("Asking for name");
+                var name = await PromptMessage("Setlist name", "Enter a name for the setlist", "OK");
+                var tempFile = SetlistShareManager.GenerateSetlistShareFile(name, _setlistSource.Items);
+                var activityViewController = new UIActivityViewController(new NSObject[1] { tempFile.FileNSUrl }, null);
+                activityViewController.ModalPresentationStyle = UIModalPresentationStyle.Popover;
+                activityViewController.PopoverPresentationController.BarButtonItem = sender;
+                activityViewController.PopoverPresentationController.SourceView = View;
+                activityViewController.ExcludedActivityTypes = new NSString[0];
+                PresentViewController(activityViewController, true, () => 
+                {
+                    tempFile?.Dispose();
+                });
+            }
         }
 
         partial void Settings_Action(UIBarButtonItem sender)

@@ -61,6 +61,10 @@ namespace Clad
         [GeneratedCode ("iOS Designer", "1.0")]
         partial void Settings_Action (UIKit.UIBarButtonItem sender);
 
+        [Action ("Share_Action:")]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        partial void Share_Action (UIKit.UIBarButtonItem sender);
+
         [Action ("VolumeChange:")]
         [GeneratedCode ("iOS Designer", "1.0")]
         partial void VolumeChange (UIKit.UISlider sender);

@@ -26,12 +26,20 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <items>
                                     <navigationItem title="Clad" id="1071">
-                                        <barButtonItem key="rightBarButtonItem" id="11671" style="plain" title="Settings">
-                                            <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
-                                            <connections>
-                                                <action selector="Settings_Action:" destination="277" id="11672"/>
-                                            </connections>
-                                        </barButtonItem>
+                                        <rightBarButtonItems>
+                                            <barButtonItem id="11671" style="plain" title="Settings">
+                                                <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
+                                                <connections>
+                                                    <action selector="Settings_Action:" destination="277" id="11672"/>
+                                                </connections>
+                                            </barButtonItem>
+                                            <barButtonItem id="13079" systemItem="action" style="plain">
+                                                <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
+                                                <connections>
+                                                    <action selector="Share_Action:" destination="277" id="13080"/>
+                                                </connections>
+                                            </barButtonItem>
+                                        </rightBarButtonItems>
                                     </navigationItem>
                                 </items>
                                 <textAttributes key="titleTextAttributes">
