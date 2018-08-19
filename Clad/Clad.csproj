@@ -96,6 +96,35 @@
   <ItemGroup>
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json" />
     <ImageAsset Include="Assets.xcassets\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Clad1024.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Clad512.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Clad256.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Clad128.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Clad64.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Clad32.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Clad16.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Clad196.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Clad172.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Clad88.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Clad80.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Clad87.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Clad58.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Clad55.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Clad48.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Clad40.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Clad29.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Clad20.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Clad60.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Clad120.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Clad180.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Clad76.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Clad152.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Clad167.png" />
+    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\Clad2048x1536.png" />
+    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\Clad1024x768.png" />
+    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\Clad1024x748.png" />
+    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\Clad2048x1496.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
@@ -140,6 +169,10 @@
     <BundleResource Include="Resources\Sounds\Classic\C.m4a" />
     <BundleResource Include="Resources\Sounds\DefaultClick\accent.wav" />
     <BundleResource Include="Resources\Sounds\DefaultClick\sound.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <ITunesArtwork Include="iTunesArtwork%402x" />
+    <ITunesArtwork Include="iTunesArtwork" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>

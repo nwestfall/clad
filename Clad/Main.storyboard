@@ -71,6 +71,7 @@
                                         </attributes>
                                     </fragment>
                                 </attributedString>
+                                <accessibility key="accessibilityConfiguration" hint="Current BPM" identifier="CurrentBPM"/>
                             </label>
                             <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.84999999999999998" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="1711">
                                 <rect key="frame" x="627" y="524" width="378" height="31"/>
@@ -78,7 +79,7 @@
                                 <connections>
                                     <action selector="VolumeChange:" destination="277" id="12358" eventType="valueChanged"/>
                                 </connections>
-                                <accessibility key="accessibilityConfiguration" identifier="MasterVolume" label="Master Volume" hint="Master Volume"/>
+                                <accessibility key="accessibilityConfiguration" identifier="MasterVolume" label="Master Volume Control" hint="Master Volume Control"/>
                             </slider>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1909">
                                 <rect key="frame" x="271" y="70" width="120" height="100"/>
@@ -93,6 +94,7 @@
                                         <real key="value" value="10"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <accessibility key="accessibilityConfiguration" label="BPM Tap Button" identifier="BPMTapMe" hint="Tap button to determine BPM"/>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Master Volume" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9958">
                                 <rect key="frame" x="438" y="529" width="150" height="21"/>
@@ -100,6 +102,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                 <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
                                 <nil key="highlightedColor"/>
+                                <accessibility key="accessibilityConfiguration" label="Master Volume" hint="Master Volume Label" identifier="MasterVolumeLabel"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1514" customClass="PadButton">
                                 <rect key="frame" x="874" y="344" width="150" height="150"/>
@@ -276,11 +279,12 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                 <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
                                 <nil key="highlightedColor"/>
+                                <accessibility key="accessibilityConfiguration" label="Click Volume" hint="Click Volume Label" identifier="ClickVolumeLabel"/>
                             </label>
                             <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.84999999999999998" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="11909">
                                 <rect key="frame" x="627" y="575" width="378" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                                <accessibility key="accessibilityConfiguration" label="Click Volume" hint="Click Volume" identifier="ClickVolume"/>
+                                <accessibility key="accessibilityConfiguration" label="Click Volume Control" hint="Click Volume Control" identifier="ClickVolume"/>
                                 <connections>
                                     <action selector="VolumeChange:" destination="277" id="12819" eventType="valueChanged"/>
                                 </connections>
@@ -291,6 +295,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                 <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
                                 <nil key="highlightedColor"/>
+                                <accessibility key="accessibilityConfiguration" label="Pad Vollume" hint="Pad Volume Label" identifier="PadVolumeLabel"/>
                             </label>
                             <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.84999999999999998" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="11911">
                                 <rect key="frame" x="627" y="626" width="378" height="31"/>
@@ -298,7 +303,7 @@
                                 <connections>
                                     <action selector="VolumeChange:" destination="277" id="12820" eventType="valueChanged"/>
                                 </connections>
-                                <accessibility key="accessibilityConfiguration" label="Pad Volume" hint="Pad Volume" identifier="PadVolume"/>
+                                <accessibility key="accessibilityConfiguration" label="Pad Volume Control" hint="Pad Volume Control" identifier="PadVolume"/>
                             </slider>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="11914">
                                 <rect key="frame" x="739" y="687" width="120" height="61"/>
@@ -359,6 +364,7 @@
                                         </attributes>
                                     </fragment>
                                 </attributedString>
+                                <accessibility key="accessibilityConfiguration" hint="Upper time signature number" identifier="TSUpper"/>
                             </label>
                             <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="13332">
                                 <rect key="frame" x="42" y="256" width="114" height="62"/>
@@ -373,9 +379,10 @@
                                         </attributes>
                                     </fragment>
                                 </attributedString>
+                                <accessibility key="accessibilityConfiguration" hint="Lower time signature number" identifier="TSLower"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" red="0.098039215686274508" green="0.12549019607843137" blue="0.13725490196078433" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" colorSpace="calibratedRGB" red="0.098039215686274508" green="0.12549019607843137" blue="0.13725490196078433" alpha="1"/>
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>

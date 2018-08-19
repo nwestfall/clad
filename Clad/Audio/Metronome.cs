@@ -5,6 +5,8 @@
  * */
 
 using System;
+using System.Timers;
+using System.Diagnostics;
 
 using Clad.Models;
 using Foundation;
@@ -21,6 +23,11 @@ namespace Clad.Audio
         AVAudioPlayer _accentPlayer;
         NSTimer _metronomeTimer;
         volatile int _count = 0;
+
+#if DEBUG
+        volatile int _testMinuteCount = 0;
+        Timer _testTimer = new Timer(60000);
+#endif
 
         volatile static bool _isRunning = false;
 
@@ -43,6 +50,16 @@ namespace Clad.Audio
             _accentPlayer.Pan = -1;
             _accentPlayer.PrepareToPlay();
             // TODO: Check error
+
+#if DEBUG
+            _testTimer.Elapsed += (object sender, ElapsedEventArgs e) =>
+            {
+                Debug.WriteLine($"One minute passed, BPM count: {_testMinuteCount}");
+                if (_testMinuteCount != _model.CurrentBPM)
+                    throw new Exception($"BPM Counts don't match: Current = {_model.CurrentBPM}, Actual = {_testMinuteCount}");
+                _testMinuteCount = 0;
+            };
+#endif
         }
 
         public void Start()
@@ -51,6 +68,10 @@ namespace Clad.Audio
             var metronomeTimeInterval = (240.0 / (double)_model.Lower) / _model.CurrentBPM;
             _metronomeTimer = NSTimer.CreateScheduledTimer(metronomeTimeInterval, true, PlaySound);
             _metronomeTimer?.Fire();
+#if DEBUG
+            _testTimer.AutoReset = true;
+            _testTimer.Enabled = true;
+#endif
         }
 
         public void Stop()
@@ -59,6 +80,10 @@ namespace Clad.Audio
             _metronomeTimer?.Dispose();
             _metronomeTimer = null;
             _count = 0;
+#if DEBUG
+            _testTimer.Enabled = false;
+            _testMinuteCount = 0;
+#endif
             _isRunning = false;
         }
 
@@ -109,6 +134,9 @@ namespace Clad.Audio
 
         private void PlaySound(NSTimer timer)
         {
+#if DEBUG
+            _testMinuteCount++;
+#endif
             _count++;
             if (_count == 1)
                 _accentPlayer.Play();
