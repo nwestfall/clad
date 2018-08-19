@@ -164,6 +164,7 @@
     <Compile Include="Helpers\Settings.cs" />
     <Compile Include="Helpers\LiteDbHelper.cs" />
     <Compile Include="Helpers\SetlistShareManager.cs" />
+    <Compile Include="SettingsPopupView.cs" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Sounds\Classic\C.m4a" />
