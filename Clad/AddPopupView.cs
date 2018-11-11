@@ -51,8 +51,8 @@ namespace Clad
             _navBar = new UINavigationBar(new CGRect(0, 0, 500, 30));
             _navBar.BackgroundColor = UIColor.FromRGB(26, 32, 35);
             _navBar.TintColor = UIColor.FromRGB(26, 32, 35);
-            _navBar.BarTintColor = UIColor.LightTextColor;
-            _navBar.Items = new UINavigationItem[]
+			_navBar.BarTintColor = UIColor.LightTextColor;
+			_navBar.Items = new UINavigationItem[]
             {
                 new UINavigationItem()
                 {
